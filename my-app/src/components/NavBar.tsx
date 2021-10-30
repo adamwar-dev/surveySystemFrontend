@@ -4,15 +4,15 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { ThemeSwitchButton } from './ThemeSwitchButton';
+import { BackArrow } from './BackArrow';
 
-
-interface MainPageBarProps {
-	barText: string;
+interface NavBarProps {
+	barText?: string;
+	backArrowVisable?: boolean;
 }
 
-export class MainPageBar extends React.Component<MainPageBarProps> {
-	public constructor(props: MainPageBarProps) {
+export class NavBar extends React.Component<NavBarProps> {
+	public constructor(props: NavBarProps) {
 		super(props);
 	}
 
@@ -27,24 +27,25 @@ export class MainPageBar extends React.Component<MainPageBarProps> {
 	public render () {
 		const {
 			barText,
+			backArrowVisable,
 		} = this.props;
 
 		return (
 			<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
-					<Typography
-						variant="h6"
-						component="div"
-						sx={{ flexGrow: 1 }}
-					>
-					{barText}
-					</Typography>
-					<ThemeSwitchButton/>
+					<BackArrow visable={backArrowVisable}/>
+						<Typography
+							variant="h6"
+							component="div"
+							sx={{ flexGrow: 1 }}
+						>
+						{barText}
+						</Typography>
 					<Button 
 						color="inherit"
 					>
-						Log out
+						{'Log out'}
 					</Button>
 				</Toolbar>
 			</AppBar>
