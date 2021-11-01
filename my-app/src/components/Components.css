@@ -5,3 +5,8 @@
     margin-left: 8px;
     margin-bottom: 8px;
 }
+
+.Tile {
+    padding: 5px;
+    height: 200px;
+}

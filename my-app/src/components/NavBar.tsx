@@ -31,7 +31,7 @@ export class NavBar extends React.Component<NavBarProps> {
 		} = this.props;
 
 		return (
-			<Box sx={{ flexGrow: 1 }}>
+			<Box sx={{ flexGrow: 1, mb: '50px' }}>
 			<AppBar position="static">
 				<Toolbar>
 					<BackArrow visable={backArrowVisable}/>
