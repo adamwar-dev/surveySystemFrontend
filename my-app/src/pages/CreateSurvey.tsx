@@ -10,7 +10,7 @@ export class CreateSurvey extends React.Component{
 	public render () {
 		return (
 			<React.Fragment>
-                <NavBar backArrowVisable={true} barText={'Create a Survey'}/>
+                <NavBar backArrowVisable={true} barText={'Create a Survey'} linkTo='/'/>
 				<Box sx={{ flexGrow: 1, width:'100%', height:'85vh'}}>
 					<Grid container spacing={10} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{mb:'30px'}}>
 					<Grid item xs={12} sm={6} md={4}>

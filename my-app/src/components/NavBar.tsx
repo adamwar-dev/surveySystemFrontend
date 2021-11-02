@@ -10,6 +10,7 @@ import { Link } from '@mui/material';
 interface NavBarProps {
 	barText?: string;
 	backArrowVisable?: boolean;
+	linkTo?: string;
 }
 
 export class NavBar extends React.Component<NavBarProps> {
@@ -29,13 +30,14 @@ export class NavBar extends React.Component<NavBarProps> {
 		const {
 			barText,
 			backArrowVisable,
+			linkTo,
 		} = this.props;
 
 		return (
 			<Box sx={{ flexGrow: 1, mb: '50px' }}>
 			<AppBar position="static">
 				<Toolbar>
-					<Link href='/'>
+					<Link href={linkTo}>
 						<BackArrow visable={backArrowVisable}/>
 					</Link>
 						<Typography
