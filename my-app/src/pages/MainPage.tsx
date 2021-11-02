@@ -13,17 +13,17 @@ export class MainPage extends React.Component {
 	public render() {
 		return (
 			<React.Fragment>
-				<NavBar barText="Hi, Pedale"/>
-				<Box sx={{ flexGrow: 1, width:'80%', height:'85vh'}}>
+				<NavBar barText="Hi, Username"/>
+				<Box sx={{ flexGrow: 1, width:'100%', height:'85vh'}}>
 					<Grid container spacing={10} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 						<Grid item xs={12} sm={6}>
-							<Tile primaryText='Create a Survey' linkTo='' icon={<AssignmentRoundedIcon fontSize='large'/>}/>
+							<Tile primaryText='Create a Survey' linkTo='create' icon={<AssignmentRoundedIcon fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
-							<Tile primaryText='Surveys History' linkTo='' icon={<HistoryEduRoundedIcon fontSize='large'/>}/>
+							<Tile primaryText='Surveys History' linkTo='history' icon={<HistoryEduRoundedIcon fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
-							<Tile primaryText='Profile' linkTo='' icon={<AccountBoxRoundedIcon fontSize='large'/>}/>
+							<Tile primaryText='Profile' linkTo='/profile' icon={<AccountBoxRoundedIcon fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
 							<Tile primaryText='' linkTo=''/>

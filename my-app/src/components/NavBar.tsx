@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { BackArrow } from './BackArrow';
+import { Link } from '@mui/material';
 
 interface NavBarProps {
 	barText?: string;
@@ -34,7 +35,9 @@ export class NavBar extends React.Component<NavBarProps> {
 			<Box sx={{ flexGrow: 1, mb: '50px' }}>
 			<AppBar position="static">
 				<Toolbar>
-					<BackArrow visable={backArrowVisable}/>
+					<Link href='/'>
+						<BackArrow visable={backArrowVisable}/>
+					</Link>
 						<Typography
 							variant="h6"
 							component="div"
