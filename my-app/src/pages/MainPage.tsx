@@ -8,6 +8,7 @@ import '../styles/MainPage.css';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import HistoryEduRoundedIcon from '@mui/icons-material/HistoryEduRounded';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
+import EuroRoundedIcon from '@mui/icons-material/EuroRounded';
 
 export class MainPage extends React.Component {
 	public render() {
@@ -26,7 +27,7 @@ export class MainPage extends React.Component {
 							<Tile primaryText='Profile' linkTo='/profile' icon={<AccountBoxRoundedIcon fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
-							<Tile primaryText='' linkTo=''/>
+							<Tile primaryText='Comming Soon...' linkTo='' icon={<EuroRoundedIcon fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12}>
 							<Footer/>
