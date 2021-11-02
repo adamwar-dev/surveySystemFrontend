@@ -23,8 +23,8 @@ export class Tile extends React.Component<TileProps>{
 		} = this.props;
 		return (
 			<Link href={linkTo} underline={'none'}>
-				<Card sx={{ height: 225 ,ml: '30px', mr: '30px'}}>
-					<CardContent sx={{ height: 225}}>
+				<Card sx={{ height: 210 ,ml: '30px', mr: '30px'}}>
+					<CardContent sx={{ height: 210}}>
 						<Typography align='center' sx={{ fontSize: 18, mt: '40px'}} color="text.primary">
 							{primaryText}
 						</Typography>
