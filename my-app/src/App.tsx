@@ -5,6 +5,7 @@ import { MainPage } from './pages/MainPage'
 import { Profile } from './pages/Profile';
 import { CreateSurvey } from './pages/CreateSurvey';
 import { HistorySurvey } from './pages/HistorySurvey';
+import { Survey } from './pages/Survey';
 
 
 class App extends React.Component {
@@ -24,6 +25,8 @@ class App extends React.Component {
 					<Route path={'/profile'}>
 						<Profile/>
 					</Route>
+					<Route exact path={'/survey/:id'} render={(props) => (
+    					<Survey surveyType={props.match.params.id}/>)} />
 				</Switch>
 			</Router>
 		);
