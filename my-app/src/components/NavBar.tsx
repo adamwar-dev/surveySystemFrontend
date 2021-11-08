@@ -35,7 +35,7 @@ export class NavBar extends React.Component<NavBarProps> {
 
 		return (
 			<Box sx={{ flexGrow: 1, mb: '50px' }}>
-			<AppBar position="static">
+			<AppBar position="static" sx={{ backgroundColor:'#916BBF'}}>
 				<Toolbar>
 					<Link href={linkTo}>
 						<BackArrow visable={backArrowVisable}/>
