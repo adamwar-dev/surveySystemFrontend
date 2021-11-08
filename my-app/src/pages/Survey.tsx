@@ -24,7 +24,7 @@ export class Survey extends React.Component<SurveyProps> {
 						'Private Survey' :
 						'Distributed Survey'
 					}
-					linkTo='/'/>
+					linkTo='/create'/>
             </React.Fragment>
 		);
 	}
