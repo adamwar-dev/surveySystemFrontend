@@ -14,7 +14,7 @@ export class OpenQuestion extends React.Component{
 							label='Question'
 							placeholder='e.g. What do you think about zmitac?'
 							multiline
-							fullWidth
+							fullWidth			
 						/>
 					</CardContent>
 				</Card>

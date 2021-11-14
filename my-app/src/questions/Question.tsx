@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { OpenQuestion } from './OpenQuestion';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 interface QuestionProps{}
 
@@ -52,7 +52,7 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 									 	fullWidth
 										sx={{my: '10%', textAlign: 'center'}}
 										style={{backgroundColor:'#916BBF'}}
-										startIcon={<DeleteIcon sx={{mr: '-8px'}}/>}
+										startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
 									/>
 								</Grid>
 							</Grid>
