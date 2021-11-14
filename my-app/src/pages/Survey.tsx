@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NavBar } from '../components/NavBar';
+import { Question } from '../questions/Question';
 
 interface SurveyProps {
 	surveyType: string;
@@ -25,6 +26,7 @@ export class Survey extends React.Component<SurveyProps> {
 						'Distributed Survey'
 					}
 					linkTo='/create'/>
+				<Question/>
             </React.Fragment>
 		);
 	}

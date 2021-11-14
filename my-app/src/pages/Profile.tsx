@@ -102,15 +102,15 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 		);
 	}
 
-	private readonly handleChangePassword =  () => (event: React.ChangeEvent<HTMLInputElement>) => {
+	private readonly handleChangePassword = () => (event: React.ChangeEvent<HTMLInputElement>) => {
 		this.setState({password: event.target.value});
 	};
 
-	private readonly handleChangeShowPassword =  (showPassword: boolean) => () => {
+	private readonly handleChangeShowPassword = (showPassword: boolean) => () => {
 		this.setState({showPassword});
 	};
 
-	private readonly handleMouseDownPassword =  (event: React.MouseEvent<HTMLButtonElement>)  => {
+	private readonly handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 	};
 }
