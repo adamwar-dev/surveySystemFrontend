@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { OpenQuestion } from './OpenQuestion';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import { MultiChoiceQuestion } from './MultiChoiceQuestion';
 
 interface QuestionProps{}
 
@@ -26,8 +27,8 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 		} = this.state;
 		return (
 			<React.Fragment>
-				<Card>
-					<CardContent>
+				<Card sx={{my: '40px'}}>
+					<CardContent style={{backgroundColor:'#D8BFD8'}}>
 						<Box sx={{ flexGrow: 1, width:'100%'}}>
 							<Grid container spacing={10} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>	
 								<Grid item xs={10} sm={10} xl={11}>
@@ -58,10 +59,13 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 							</Grid>
 						</Box>
 					</CardContent>
-				</Card>
 					{optionSelected === 'Open' &&
-						<OpenQuestion/>
+						<OpenQuestion placeholder={'e.g. What do you think about Zmitac?'}/>
 					}
+					{optionSelected === 'Multi' &&
+						<MultiChoiceQuestion placeholder={'e.g. Which ZMITAC teacher do you know?'}/>
+					}
+				</Card>		
 			</React.Fragment>
 		);
 	}

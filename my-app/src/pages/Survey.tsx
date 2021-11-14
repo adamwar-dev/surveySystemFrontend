@@ -1,3 +1,4 @@
+import { Card, CardContent, TextField } from '@mui/material';
 import * as React from 'react';
 import { NavBar } from '../components/NavBar';
 import { Question } from '../questions/Question';
@@ -20,12 +21,24 @@ export class Survey extends React.Component<SurveyProps> {
                 <NavBar 
 					backArrowVisable={true}
 					barText={surveyType === 'public' ?
-					'Public Survey' :
-					surveyType === 'private' ?
-						'Private Survey' :
-						'Distributed Survey'
+						'Public Survey' :
+						surveyType === 'private' ?
+							'Private Survey' :
+							'Distributed Survey'
 					}
-					linkTo='/create'/>
+					linkTo='/create'
+				/>
+				<Card>
+					<CardContent style={{backgroundColor: '#DDA0DD'}}>
+						<TextField
+							id='title'
+							label='Title'
+							placeholder='e.g. Survey about ZMITAC'
+							multiline
+							fullWidth			
+						/>
+					</CardContent>
+				</Card>
 				<Question/>
             </React.Fragment>
 		);
