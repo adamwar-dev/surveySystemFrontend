@@ -1,13 +1,16 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { OpenQuestion } from './OpenQuestion';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { MultiChoiceQuestion } from './MultiChoiceQuestion';
 import { SingleChoiseQuestion } from './SingleChoiceQuestion';
 
-interface QuestionProps{}
+export interface QuestionProps {
+	numberOfQuestion: number;
+	OnDeleteClick: (numberOfQuestion: number) => void;
+}
 
 interface QuestionState {
 	optionSelected: string;
@@ -24,15 +27,26 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 
 	public render () {
 		const {
+			numberOfQuestion,
+			OnDeleteClick,
+		} = this.props;
+
+		const {
 			optionSelected,
 		} = this.state;
+
 		return (
 			<React.Fragment>
 				<Card sx={{my: '40px'}}>
 					<CardContent style={{backgroundColor:'#D8BFD8'}}>
 						<Box sx={{ flexGrow: 1, width:'100%'}}>
 							<Grid container spacing={10} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>	
-								<Grid item xs={10} sm={10} xl={11}>
+								<Grid item xs={2} sm={2} xl={2}>
+									<Typography align={'center'} sx={{textAlign: 'center'}}>
+										{"Question " + (numberOfQuestion + 1)}
+									</Typography>
+								</Grid>
+								<Grid item xs={8} sm={8} xl={9}>
 									<FormControl fullWidth>
 										<InputLabel id='label-type'>Type</InputLabel>
 										<Select
@@ -55,6 +69,7 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 										sx={{my: '10%', textAlign: 'center'}}
 										style={{backgroundColor:'#916BBF'}}
 										startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
+										onClick={() => OnDeleteClick(numberOfQuestion)}
 									/>
 								</Grid>
 							</Grid>
