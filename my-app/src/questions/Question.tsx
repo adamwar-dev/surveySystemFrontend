@@ -5,6 +5,7 @@ import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectCha
 import { OpenQuestion } from './OpenQuestion';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { MultiChoiceQuestion } from './MultiChoiceQuestion';
+import { SingleChoiseQuestion } from './SingleChoiceQuestion';
 
 interface QuestionProps{}
 
@@ -61,6 +62,9 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 					</CardContent>
 					{optionSelected === 'Open' &&
 						<OpenQuestion placeholder={'e.g. What do you think about Zmitac?'}/>
+					}
+					{optionSelected === 'Single' &&
+						<SingleChoiseQuestion placeholder={'e.g. Which ZMITAC teacher is the best?'}/>
 					}
 					{optionSelected === 'Multi' &&
 						<MultiChoiceQuestion placeholder={'e.g. Which ZMITAC teacher do you know?'}/>

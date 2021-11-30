@@ -36,13 +36,15 @@ export class OptionClick extends React.Component<OptionClickProps> {
 						/>
 					</Grid>
 					<Grid item xs={1}>
-						<Button 
-							variant="contained"
-							fullWidth
-							style={{backgroundColor:'#D8BFD8'}}
-							startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
-							onClick={() => OnDeleteClick(optionNumber)}
-						/>
+						{optionNumber > 1 &&
+							<Button 
+								variant="contained"
+								fullWidth
+								style={{backgroundColor:'#D8BFD8'}}
+								startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
+								onClick={() => OnDeleteClick(optionNumber)}
+							/>
+						}
 					</Grid>
 				</Grid>
 			</Box>
