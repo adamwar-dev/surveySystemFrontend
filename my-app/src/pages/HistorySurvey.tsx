@@ -5,7 +5,7 @@ export class HistorySurvey extends React.Component{
 	public render () {
 		return (
 			<React.Fragment>
-                <NavBar backArrowVisable={true} barText={'History'} linkTo='/'/>
+                <NavBar backArrowVisable={true} barText={'History'} linkTo='/mainPage'/>
             </React.Fragment>
 		);
 	}

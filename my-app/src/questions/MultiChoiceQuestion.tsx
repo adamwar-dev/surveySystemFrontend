@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Card, CardContent } from '@mui/material';
-import { OptionClick, OptionClickProps } from '../components/OptionClick';
+import { Option, OptionProps } from '../components/Option';
 import { OpenQuestion } from './OpenQuestion';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
@@ -9,7 +9,7 @@ interface MultiChoiceQuestionProps {
 }
 
 interface MultiChoiceQuestionState {
-	options: OptionClickProps[];
+	options: OptionProps[];
 }
 
 export class MultiChoiceQuestion extends React.Component<MultiChoiceQuestionProps, MultiChoiceQuestionState> {
@@ -31,7 +31,7 @@ export class MultiChoiceQuestion extends React.Component<MultiChoiceQuestionProp
 		} = this.state;
 
 		const renderOptions = this.state.options.map((option, index) => {
-			return <OptionClick key={index} optionNumber={index} OnDeleteClick={option.OnDeleteClick}/>
+			return <Option key={index} optionNumber={index} OnDeleteClick={option.OnDeleteClick}/>
 		});
 
 		return (
@@ -60,7 +60,7 @@ export class MultiChoiceQuestion extends React.Component<MultiChoiceQuestionProp
 	}
 
 	private readonly optionAddClick = () => {
-		const another: OptionClickProps = {
+		const another: OptionProps = {
 			optionNumber: this.state.options.length,
 			OnDeleteClick: this.optionDeleteClick,
 		}

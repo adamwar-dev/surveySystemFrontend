@@ -51,7 +51,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 						<TextField
 							id='title'
 							label='Title'
-							placeholder='e.g. Survey about ZMITAC'
+							placeholder='e.g. Survey about tasty food!'
 							multiline
 							fullWidth			
 						/>

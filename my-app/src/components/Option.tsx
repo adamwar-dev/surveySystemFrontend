@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Box, Button, Grid, TextField } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
-export interface OptionClickProps {
+export interface OptionProps {
 	optionNumber: number;
 	OnDeleteClick: (optionNumber: number) => void;
 }
-export class OptionClick extends React.Component<OptionClickProps> {
-	public constructor(props: OptionClickProps) {
+export class Option extends React.Component<OptionProps> {
+	public constructor(props: OptionProps) {
 		super(props);
 	}
 	public render () {
@@ -30,7 +30,7 @@ export class OptionClick extends React.Component<OptionClickProps> {
 						<TextField
 							id='option'
 							label='option'
-							placeholder={'e.g. Jarosław Paduch'}
+							placeholder={'e.g. Pepperoni'}
 							multiline
 							fullWidth			
 						/>

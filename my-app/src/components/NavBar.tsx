@@ -35,20 +35,21 @@ export class NavBar extends React.Component<NavBarProps> {
 
 		return (
 			<Box sx={{ flexGrow: 1, mb: '50px' }}>
-			<AppBar position="static" sx={{ backgroundColor:'#916BBF'}}>
+			<AppBar position='static' sx={{ backgroundColor:'#916BBF'}}>
 				<Toolbar>
 					<Link href={linkTo}>
 						<BackArrow visable={backArrowVisable}/>
 					</Link>
 						<Typography
-							variant="h6"
-							component="div"
+							variant='h6'
+							component='div'
 							sx={{ flexGrow: 1 }}
 						>
 						{barText}
 						</Typography>
 					<Button 
-						color="inherit"
+						color='inherit'
+						href='/'
 					>
 						{'Log out'}
 					</Button>

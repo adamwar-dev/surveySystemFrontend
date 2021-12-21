@@ -40,7 +40,7 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 		} = this.state;
 		return (
 			<React.Fragment>
-                <NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo='/'/>
+                <NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo='/mainPage'/>
 				<Box sx={{ flexGrow: 1, width:'100%'}}>
 					<Grid container spacing={3} alignContent='center' columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 						<Grid item xs={12} textAlign='center'>

@@ -17,7 +17,7 @@ interface QuestionState {
 }
 
 
-export class Question extends React.Component<QuestionProps,QuestionState>{
+export class Question extends React.Component<QuestionProps, QuestionState> {
 	public constructor(props: QuestionProps) {
 		super(props);
 		this.state = {
@@ -56,9 +56,9 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 											label='Type'
 											onChange={this.handleChangeOption}
 										>
-											<MenuItem value={'Open'}>Open Question</MenuItem>
-											<MenuItem value={'Multi'}>Multiple Choice Question</MenuItem>
-											<MenuItem value={'Single'}>Single Choise Question</MenuItem>
+											<MenuItem value={'Open'}>{'Open Question'}</MenuItem>
+											<MenuItem value={'Multi'}>{'Multiple Choice Question'}</MenuItem>
+											<MenuItem value={'Single'}>{'Single Choise Question'}</MenuItem>
 										</Select>
 									</FormControl>
 								</Grid>
@@ -76,13 +76,13 @@ export class Question extends React.Component<QuestionProps,QuestionState>{
 						</Box>
 					</CardContent>
 					{optionSelected === 'Open' &&
-						<OpenQuestion placeholder={'e.g. What do you think about Zmitac?'}/>
+						<OpenQuestion placeholder={'e.g. What do you think about pizza?'}/>
 					}
 					{optionSelected === 'Single' &&
-						<SingleChoiseQuestion placeholder={'e.g. Which ZMITAC teacher is the best?'}/>
+						<SingleChoiseQuestion placeholder={'e.g. Which pizza you like best?'}/>
 					}
 					{optionSelected === 'Multi' &&
-						<MultiChoiceQuestion placeholder={'e.g. Which ZMITAC teacher do you know?'}/>
+						<MultiChoiceQuestion placeholder={'e.g. What pizzas do you know?'}/>
 					}
 				</Card>		
 			</React.Fragment>
