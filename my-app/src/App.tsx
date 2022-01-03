@@ -22,6 +22,9 @@ class App extends React.Component {
 					<Route exact path={'/signIn'}>
 						<SignIn/>
 					</Route>
+					<Route exact path={'/signIn/:status'} render={(props) => (
+    					<SignIn status={props.match.params.status}/>)} 
+					/>
 					<Route exact path={'/signUp'}>
 						<SignUp/>
 					</Route>

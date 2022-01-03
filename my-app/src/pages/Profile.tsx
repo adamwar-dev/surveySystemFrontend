@@ -14,11 +14,14 @@ import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded
 import { NavBar } from '../components/NavBar';
 import '../styles/Pages.css'
 import { palettePro } from '../styles/PalettePro';
+import { AuthenticationDataProvider } from '../data/AuthenticationDataProvider';
+import { Redirect } from 'react-router-dom';
 
 interface ProfileState {
 	email: string;
 	password: string;
 	showPassword: boolean;
+	resetStatus?: boolean;
 }
 
 interface ProfileProps {
@@ -31,9 +34,18 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 		this.state = {
 			password: 'polskagurom',
 			showPassword: false,
-			email: 'mariuszpudzian@sztanga.pl'
+			email: 'mariuszpudzian@sztanga.pl',
+			resetStatus: undefined,
 		}
 	}
+
+	public componentDidMount() {
+		return AuthenticationDataProvider.getUserData(this.props.token!)
+		.then(data => {
+			this.setState({email: data});
+		})
+	}	
+	
 	public render () {
 		const {
 			email,
@@ -43,7 +55,7 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 		return (
 			<React.Fragment>
                 <NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo={'/mainPage/' + this.props.token}/>
-				<Box sx={{ flexGrow: 1, width:'100%'}}>
+				<Box  component='form' onSubmit={this.handleSubmit} sx={{ flexGrow: 1, width:'100%'}}>
 					<Grid container spacing={3} alignContent='center' columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 						<Grid item xs={12} textAlign='center'>
 							<div className='circle'>
@@ -105,6 +117,7 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 							>
 								{'Reset Password'}
 							</Button>
+							{ this.state.resetStatus ? (<Redirect push to="/signIn/success"/>) : null }
 						</Grid>
 					</Grid>
 				</Box>
@@ -122,5 +135,23 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 
 	private readonly handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
+	};
+
+	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        const {
+			email,
+		} = this.state;
+		event.preventDefault();
+		return AuthenticationDataProvider.resetPassword(email)
+        .then(status => {
+			console.log({
+				email: this.state.email,
+			});
+			if (status===201) {
+                this.setState({resetStatus: true});
+			} else {
+                this.setState({resetStatus: false});
+			}
+		})
 	};
 }

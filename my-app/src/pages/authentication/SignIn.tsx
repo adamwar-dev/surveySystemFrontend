@@ -13,8 +13,11 @@ import {palettePro} from '../../styles/PalettePro';
 import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
 import { Redirect } from 'react-router-dom';
 import SmsFailedRoundedIcon from '@mui/icons-material/SmsFailedRounded';
+import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 
-interface SingInProps {}
+interface SingInProps {
+	status?: string;
+}
 
 export interface SignInState {
 	email: string;
@@ -23,6 +26,7 @@ export interface SignInState {
 	passwordError: boolean;
 	redirect?: boolean;
 	token?: string;
+	status?: string;
 }
 
 export class SignIn extends React.Component<SingInProps, SignInState> {
@@ -36,11 +40,12 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			passwordError: true,
 			redirect: undefined,
 			token: '',
+			status: '',
 		}
 	}
 
 	public componentDidMount() {
-
+		this.setState({status: this.props.status});
 	}
 
 	public componentWillUnmount() {
@@ -54,6 +59,7 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			emailError,
 			passwordError,
 			token,
+			status,
 		} = this.state;
 
 		return (
@@ -149,6 +155,24 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 								</Grid>
 							</Grid>
 						}
+						{status === 'success' &&
+							<Grid container>
+								<Grid item xs>
+								</Grid>
+								<Grid item>
+									<div style={{
+										marginTop: '10px',
+										display: 'flex',
+										alignItems: 'center',
+										flexWrap: 'wrap',
+										color: '#009933',
+									}}>
+										<CheckBoxRoundedIcon htmlColor='#009933'/>
+										<span>{'Sign In now with a new password'}</span>
+									</div>
+								</Grid>
+							</Grid>
+						}
 					</Box>
 				</Box>
 				<Copyright sx={{ mt: 8, mb: 4 }} />
@@ -176,11 +200,12 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 	}
 
 	private readonly validatePassword = (password: string) => {
-		if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
-			this.setState({passwordError: false});
-		} else {
-			this.setState({passwordError: true});
-		}
+		this.setState({passwordError: false});
+		// if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
+		// 	this.setState({passwordError: false});
+		// } else {
+		// 	this.setState({passwordError: true});
+		// }
 	}
 
 	
@@ -189,7 +214,7 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			email,
 			password,
 		} = this.state;
-		this.setState({ redirect: undefined });
+		this.setState({ redirect: undefined, status: undefined });
 		event.preventDefault();
 		return AuthenticationDataProvider.singIn(email, password)
 		.then((newToken) => {

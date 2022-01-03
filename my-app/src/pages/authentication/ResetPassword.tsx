@@ -10,6 +10,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {palettePro} from '../../styles/PalettePro';
+import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
+import { Redirect } from 'react-router-dom';
+import SmsFailedRoundedIcon from '@mui/icons-material/SmsFailedRounded';
 
 interface ResetPasswordProps {}
 
@@ -85,6 +88,7 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 							>
 								{'Reset'}
 							</Button>
+                            { this.state.resetStatus ? (<Redirect push to="/signIn/success"/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
@@ -103,6 +107,24 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 								</Link>
 							</Grid>
 						</Grid>
+                        {this.state.resetStatus === false &&
+							<Grid container>
+								<Grid item xs>
+								</Grid>
+								<Grid item>
+									<div style={{
+										marginTop: '10px',
+										display: 'flex',
+										alignItems: 'center',
+										flexWrap: 'wrap',
+										color: '#ff6666',
+									}}>
+										<SmsFailedRoundedIcon htmlColor='#ff6666'/>
+										<span>{'Invalid Email'}</span>
+									</div>
+								</Grid>
+							</Grid>
+						}
 					</Box>
 				</Box>
 				<Copyright sx={{ mt: 8, mb: 4 }} />
@@ -124,7 +146,21 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 	}
 
 	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        const {
+			email,
+		} = this.state;
 		event.preventDefault();
+		return AuthenticationDataProvider.resetPassword(email)
+        .then(status => {
+			console.log({
+				email: this.state.email,
+			});
+			if (status===201) {
+                this.setState({resetStatus: true});
+			} else {
+                this.setState({resetStatus: false});
+			}
+		})
 	};
 }
 

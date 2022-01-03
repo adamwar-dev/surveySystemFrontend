@@ -206,7 +206,7 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 			} else {
 				this.setState({ redirect: false });
 			}
-		})
+		});
 	};
 }
 
