@@ -20,16 +20,15 @@ interface ProfileState {
 }
 
 interface ProfileProps {
-
 }
 
 export class Profile extends React.Component<ProfileProps,ProfileState>{
 	public constructor(props: ProfileProps) {
 		super(props);
 		this.state = {
-			password: 'długopis',
+			password: 'polskagurom',
 			showPassword: false,
-			email: 'prezydentrp@senat.pl'
+			email: 'mariuszpudzian@sztanga.pl'
 		}
 	}
 	public render () {

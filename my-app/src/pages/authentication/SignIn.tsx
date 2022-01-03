@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {palettePro} from '../../styles/PalettePro';
+import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
+import { Redirect } from 'react-router-dom';
 
 interface SingInProps {}
 
@@ -20,6 +22,7 @@ export interface SignInState {
 	password: string;
 	emailError: boolean;
 	passwordError: boolean;
+	redirect?: boolean;
 }
 
 export class SignIn extends React.Component<SingInProps, SignInState> {
@@ -31,6 +34,7 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			password: '',
 			emailError: true,
 			passwordError: true,
+			redirect: false,
 		}
 	}
 
@@ -106,11 +110,12 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 								type='submit'
 								fullWidth
 								variant='contained'
-								href='/mainPage'
+								//href='/mainPage'
 								sx={{ mt: 3, mb: 2, backgroundColor: palettePro.button.buttonPrimary, floodColor: palettePro.button.buttonPrimary }}
 							>
 								{'Sign In'}
 							</Button>
+							{ this.state.redirect ? (<Redirect push to="/mainPage"/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
@@ -156,11 +161,23 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 
 	
 	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		const {
+			email,
+			password,
+		} = this.state;
 		event.preventDefault();
-		console.log({
-			email: event.currentTarget.value,
-			password: event.currentTarget.value,
-		});
+		return AuthenticationDataProvider.singIn(email, password)
+		.then((token) => {
+			console.log({
+				email: this.state.email,
+				password: this.state.password,
+			});
+			if (token!=='') {
+				this.setState({ redirect: true })
+			} else {
+
+			}
+		})
 	};
 }
 

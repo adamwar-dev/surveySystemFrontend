@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {palettePro} from '../../styles/PalettePro';
 import { SignInState } from './SignIn';
+import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
+import { Redirect } from 'react-router-dom';
 
 interface SingUpProps {}
 
@@ -19,6 +21,7 @@ interface SingUpState extends SignInState {
 	emailError: boolean;
 	passwordError: boolean;
 	repeatPasswordError: boolean;
+	redirect?: boolean;
 }
 
 export class SignUp extends React.Component<SingUpProps, SingUpState> {
@@ -32,6 +35,7 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 			emailError: true,
 			passwordError: true,
 			repeatPasswordError: true,
+			redirect: false,
 		}
 	}
 
@@ -123,6 +127,7 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 						>
 							{'Create Account'}
 						</Button>
+						{ this.state.redirect ? (<Redirect push to="/signIn"/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
@@ -184,12 +189,24 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 	}
 
 	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		const {
+			email,
+			password,
+		} = this.state;
 		event.preventDefault();
-		console.log({
-			email: this.state.email,
-			password: this.state.password,
-			repeatPassword: this.state.repeatPassword,
-		});
+		return AuthenticationDataProvider.createAccount(email, password)
+		.then(token => {
+			console.log({
+				email: this.state.email,
+				password: this.state.password,
+				repeatPassword: this.state.repeatPassword,
+			});
+			if (token===201) {
+				this.setState({ redirect: true })
+			} else {
+
+			}
+		})
 	};
 }
 
