@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,6 +12,7 @@ import Container from '@mui/material/Container';
 import {palettePro} from '../../styles/PalettePro';
 import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
 import { Redirect } from 'react-router-dom';
+import SmsFailedRoundedIcon from '@mui/icons-material/SmsFailedRounded';
 
 interface SingInProps {}
 
@@ -23,6 +22,7 @@ export interface SignInState {
 	emailError: boolean;
 	passwordError: boolean;
 	redirect?: boolean;
+	token?: string;
 }
 
 export class SignIn extends React.Component<SingInProps, SignInState> {
@@ -34,7 +34,8 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			password: '',
 			emailError: true,
 			passwordError: true,
-			redirect: false,
+			redirect: undefined,
+			token: '',
 		}
 	}
 
@@ -52,6 +53,7 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			password,
 			emailError,
 			passwordError,
+			token,
 		} = this.state;
 
 		return (
@@ -101,21 +103,16 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 							helperText={passwordError ? 'Invalid password format' : ''}
 							error={passwordError}
 						/>
-						<FormControlLabel
-							control={<Checkbox value='remember' color='primary' />}
-							label='Remember me'
-						/>
-							<Button
-								disabled={emailError || passwordError}
-								type='submit'
-								fullWidth
-								variant='contained'
-								//href='/mainPage'
-								sx={{ mt: 3, mb: 2, backgroundColor: palettePro.button.buttonPrimary, floodColor: palettePro.button.buttonPrimary }}
-							>
-								{'Sign In'}
-							</Button>
-							{ this.state.redirect ? (<Redirect push to="/mainPage"/>) : null }
+						<Button
+							disabled={emailError || passwordError}
+							type='submit'
+							fullWidth
+							variant='contained'
+							sx={{ mt: 3, mb: 2, backgroundColor: palettePro.button.buttonPrimary, floodColor: palettePro.button.buttonPrimary }}
+						>
+							{'Sign In'}
+						</Button>
+						{ this.state.redirect ? (<Redirect push to={"/mainPage/" + token}/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
@@ -125,6 +122,33 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 								</Link>
 							</Grid>
 						</Grid>
+						<Grid container>
+							<Grid item xs>
+							</Grid>
+							<Grid item>
+								<Link href='/resetPassword' variant='body2' sx={{ color: palettePro.link.linkPrimary}}>
+									{'Do you forgot password? Reset Here'}
+								</Link>
+							</Grid>
+						</Grid>
+						{this.state.redirect === false &&
+							<Grid container>
+								<Grid item xs>
+								</Grid>
+								<Grid item>
+									<div style={{
+										marginTop: '10px',
+										display: 'flex',
+										alignItems: 'center',
+										flexWrap: 'wrap',
+										color: '#ff6666',
+									}}>
+										<SmsFailedRoundedIcon htmlColor='#ff6666'/>
+										<span>{'Invalid Email or Password'}</span>
+									</div>
+								</Grid>
+							</Grid>
+						}
 					</Box>
 				</Box>
 				<Copyright sx={{ mt: 8, mb: 4 }} />
@@ -165,17 +189,18 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			email,
 			password,
 		} = this.state;
+		this.setState({ redirect: undefined });
 		event.preventDefault();
 		return AuthenticationDataProvider.singIn(email, password)
-		.then((token) => {
+		.then((newToken) => {
 			console.log({
 				email: this.state.email,
 				password: this.state.password,
 			});
-			if (token!=='') {
-				this.setState({ redirect: true })
+			if (newToken!=='') {
+				this.setState({ token: newToken, redirect: true });
 			} else {
-
+				this.setState({ redirect: false });
 			}
 		})
 	};

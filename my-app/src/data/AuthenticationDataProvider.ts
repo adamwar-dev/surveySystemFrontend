@@ -25,7 +25,7 @@ export class AuthenticationDataProvider {
 		}).then(res => {
 			console.log(res);
 			console.log(res.data);
-			data = res.data;
+			data = res.data.access_token;
 			return data;
 		}).catch(er => {
 			console.log(er);

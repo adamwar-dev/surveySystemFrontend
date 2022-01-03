@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, 
+		Button, 
 		FormControl, 
 		Grid, 
 		IconButton, 
@@ -12,6 +13,7 @@ import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
 import { NavBar } from '../components/NavBar';
 import '../styles/Pages.css'
+import { palettePro } from '../styles/PalettePro';
 
 interface ProfileState {
 	email: string;
@@ -20,6 +22,7 @@ interface ProfileState {
 }
 
 interface ProfileProps {
+	token?: string;
 }
 
 export class Profile extends React.Component<ProfileProps,ProfileState>{
@@ -39,7 +42,7 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 		} = this.state;
 		return (
 			<React.Fragment>
-                <NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo='/mainPage'/>
+                <NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo={'/mainPage/' + this.props.token}/>
 				<Box sx={{ flexGrow: 1, width:'100%'}}>
 					<Grid container spacing={3} alignContent='center' columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 						<Grid item xs={12} textAlign='center'>
@@ -62,7 +65,6 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 										</IconButton>
 									</InputAdornment>
 									}
-									
 									label="Email"
 								/>
 							</FormControl>
@@ -94,6 +96,15 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 									label="Password"
 								/>
 							</FormControl>
+						</Grid>
+						<Grid item xs={12} textAlign='center'>
+							<Button
+								type='submit'
+								variant='contained'
+								sx={{ mt: 3, mb: 2, backgroundColor: palettePro.button.buttonPrimary, floodColor: palettePro.button.buttonPrimary }}
+							>
+								{'Reset Password'}
+							</Button>
 						</Grid>
 					</Grid>
 				</Box>

@@ -8,6 +8,7 @@ import { HistorySurvey } from './pages/HistorySurvey';
 import { Survey } from './pages/Survey';
 import { SignIn } from './pages/authentication/SignIn';
 import { SignUp } from './pages/authentication/SignUp';
+import { ResetPassword } from './pages/authentication/ResetPassword';
 
 
 class App extends React.Component {
@@ -24,20 +25,27 @@ class App extends React.Component {
 					<Route exact path={'/signUp'}>
 						<SignUp/>
 					</Route>
+					<Route exact path={'/resetPassword'}>
+						<ResetPassword/>
+					</Route>
 					<Route exact path={'/mainPage'}>
 						<MainPage/>
 					</Route>
+					<Route exact path={'/mainPage/:token'} render={(props) => (
+    					<MainPage token={props.match.params.token}/>)} 
+					/>
 					<Route path={'/create'}>
 						<CreateSurvey/>
 					</Route>
 					<Route path={'/history'}>
 						<HistorySurvey/>
 					</Route>
-					<Route path={'/profile'}>
-						<Profile/>
-					</Route>
+					<Route exact path={'/profile/:token'} render={(props) => (
+    					<Profile token={props.match.params.token}/>)} 
+					/>
 					<Route exact path={'/survey/:id'} render={(props) => (
-    					<Survey surveyType={props.match.params.id}/>)} />
+    					<Survey surveyType={props.match.params.id}/>)} 
+					/>
 				</Switch>
 			</Router>
 		);

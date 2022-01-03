@@ -35,7 +35,7 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 			emailError: true,
 			passwordError: true,
 			repeatPasswordError: true,
-			redirect: false,
+			redirect: undefined,
 		}
 	}
 
@@ -204,7 +204,7 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 			if (token===201) {
 				this.setState({ redirect: true })
 			} else {
-
+				this.setState({ redirect: false });
 			}
 		})
 	};
