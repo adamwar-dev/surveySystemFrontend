@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import {palettePro} from '../../styles/PalettePro';
 import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
 import { Redirect } from 'react-router-dom';
-import SmsFailedRoundedIcon from '@mui/icons-material/SmsFailedRounded';
+import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 
 interface SingInProps {
@@ -137,6 +137,15 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 								</Link>
 							</Grid>
 						</Grid>
+						<Grid container>
+							<Grid item xs>
+							</Grid>
+							<Grid item>
+								<Link href='/verifyAccount' variant='body2' sx={{ color: palettePro.link.linkPrimary}}>
+									{'Already created account? Verify Here'}
+								</Link>
+							</Grid>
+						</Grid>
 						{this.state.redirect === false &&
 							<Grid container>
 								<Grid item xs>
@@ -149,8 +158,8 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 										flexWrap: 'wrap',
 										color: '#ff6666',
 									}}>
-										<SmsFailedRoundedIcon htmlColor='#ff6666'/>
-										<span>{'Invalid Email or Password'}</span>
+										<ErrorRoundedIcon htmlColor='#ff6666'/>
+										<span>{'Invalid Address Email or Password'}</span>
 									</div>
 								</Grid>
 							</Grid>
@@ -168,7 +177,25 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 										color: '#009933',
 									}}>
 										<CheckBoxRoundedIcon htmlColor='#009933'/>
-										<span>{'Sign In now with a new password'}</span>
+										<span>{'Sign In with a new Password now!'}</span>
+									</div>
+								</Grid>
+							</Grid>
+						}
+						{status === 'verify' &&
+							<Grid container>
+								<Grid item xs>
+								</Grid>
+								<Grid item>
+									<div style={{
+										marginTop: '10px',
+										display: 'flex',
+										alignItems: 'center',
+										flexWrap: 'wrap',
+										color: '#009933',
+									}}>
+										<CheckBoxRoundedIcon htmlColor='#009933'/>
+										<span>{'Your Account has been verfied!'}</span>
 									</div>
 								</Grid>
 							</Grid>
@@ -227,7 +254,9 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			} else {
 				this.setState({ redirect: false });
 			}
-		})
+		}).catch(error => {
+			console.log({error});
+		});
 	};
 }
 

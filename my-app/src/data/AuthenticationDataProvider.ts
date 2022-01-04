@@ -17,6 +17,37 @@ export class AuthenticationDataProvider {
 		});
 	}
 
+	public static sendConfirmationCode(email: string) {
+		let data = 0;
+		return axios.post(`http://localhost:5000/authorization/sendConfirmationCode`, {
+			email: email,
+		}).then(res => {
+			console.log(res);
+			console.log(res.data);
+			data = res.status;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+	}
+
+	public static verifyAccount(email: string, confirmationCode: string) {
+		let data = 0;
+		return axios.post(`http://localhost:5000/authorization/confirmEmail`, {
+			email: email,
+			confirmationCode: confirmationCode,
+		}).then(res => {
+			console.log(res);
+			console.log(res.data);
+			data = res.status;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+	}
+
 	public static singIn(email: string, password: string) {
 		let data = '';
 		return axios.post(`http://localhost:5000/authorization/login`, {
@@ -63,5 +94,6 @@ export class AuthenticationDataProvider {
 			return data;
 		});
 	}
+
 }
 

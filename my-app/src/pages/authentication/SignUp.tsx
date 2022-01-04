@@ -127,7 +127,7 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 						>
 							{'Create Account'}
 						</Button>
-						{ this.state.redirect ? (<Redirect push to="/signIn"/>) : null }
+						{ this.state.redirect ? (<Redirect push to={"/verifyAccount/" + email}/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
@@ -195,17 +195,22 @@ export class SignUp extends React.Component<SingUpProps, SingUpState> {
 		} = this.state;
 		event.preventDefault();
 		return AuthenticationDataProvider.createAccount(email, password)
-		.then(token => {
+		.then(() => {
 			console.log({
 				email: this.state.email,
 				password: this.state.password,
 				repeatPassword: this.state.repeatPassword,
 			});
+		}).then(() => {
+			return AuthenticationDataProvider.sendConfirmationCode(email);
+		}).then((token)=>{
 			if (token===201) {
 				this.setState({ redirect: true })
 			} else {
 				this.setState({ redirect: false });
 			}
+		}).catch(error => {
+			console.log({error});
 		});
 	};
 }

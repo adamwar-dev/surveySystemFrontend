@@ -61,16 +61,23 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 				 	this.questionAddClick()
 				}
 				{renderQuestion}
-				{questions.length < 20 &&
-					<Button 
-						variant="contained"
-						fullWidth
-						sx={{mt: '20px', textAlign: 'center'}}
-						style={{backgroundColor:'#DDA0DD'}}
-						startIcon={<AddCircleRoundedIcon/>}
-						onClick={this.questionAddClick}
-					/>
-				}
+				<Button 
+					variant="contained"
+					fullWidth
+					sx={{mt: '20px', textAlign: 'center'}}
+					style={{backgroundColor:'#DDA0DD'}}
+					startIcon={<AddCircleRoundedIcon/>}
+					onClick={this.questionAddClick}
+				/>
+				<Button 
+					variant="contained"
+					fullWidth
+					sx={{mt: '20px', textAlign: 'center'}}
+					style={{backgroundColor:'#916BBF'}}
+					onClick={() => {}}
+				>
+				{'Send'}
+				</Button>
             </React.Fragment>
 		);
 	}

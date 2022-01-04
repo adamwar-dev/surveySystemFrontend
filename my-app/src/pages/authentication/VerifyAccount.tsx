@@ -14,21 +14,27 @@ import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvide
 import { Redirect } from 'react-router-dom';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 
-interface ResetPasswordProps {}
+interface VerifyAccountProps {
+	email?: string;
+}
 
-export interface ResetPasswordState {
+export interface VerifyAccountState {
 	email: string;
+	verificactionCode: string;
 	emailError: boolean;
+	verificactionCodeError: boolean;
 	resetStatus?: boolean;
 }
 
-export class ResetPassword extends React.Component<ResetPasswordProps, ResetPasswordState> {
-	public constructor(props: ResetPasswordProps) {
+export class VerifyAccount extends React.Component<VerifyAccountProps, VerifyAccountState> {
+	public constructor(props: VerifyAccountProps) {
 		super(props);
 
 		this.state = {
 			email: '',
-			emailError: true,
+			verificactionCode: '',
+			emailError: false,
+			verificactionCodeError: true,
 			resetStatus: undefined,
 		}
 	}
@@ -44,7 +50,9 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 	public render () {
 		const {
 			email,
+			verificactionCode,
 			emailError,
+			verificactionCodeError,
 		} = this.state;
 
 		return (
@@ -62,39 +70,60 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
-						{'Reset Password'}
+						{'Verify Account'}
 					</Typography>
+					{this.props.email !== undefined &&
+						<Typography component='h1' variant='subtitle2' sx={{color: 'secondary.main'}}>
+							{'Code send to: ' + this.props.email}
+						</Typography>
+					}
 					<Box component='form' onSubmit={this.handleSubmit} noValidate sx={{ mt: 1 }}>
+						{this.props.email === undefined &&
+							<TextField
+								margin='normal'
+								required
+								fullWidth
+								id='email'
+								label='Email Address'
+								name='email'
+								autoComplete='email'
+								autoFocus
+								value={email}
+								onChange={this.handleEmailChange}
+								helperText={emailError ? 'Invalid address email' : ''}
+								error={emailError}
+							/>
+						}
 						<TextField
 							margin='normal'
 							required
 							fullWidth
-							id='email'
-							label='Email Address'
-							name='email'
-							autoComplete='email'
+							id='code'
+							label='Verification Code'
+							name='code'
+							autoComplete='Verification Code'
 							autoFocus
-							value={email}
-							onChange={this.handleEmailChange}
-							helperText={emailError ? 'Invalid address email' : ''}
-							error={emailError}
+							value={verificactionCode}
+							onChange={this.handleVerificationCodeChange}
+							helperText={verificactionCodeError ? 'Invalid Verification Code' : ''}
+								error={verificactionCodeError}
 						/>
 							<Button
-								disabled={emailError}
+								disabled={emailError || verificactionCodeError}
 								type='submit'
 								fullWidth
 								variant='contained'
 								sx={{ mt: 3, mb: 2, backgroundColor: palettePro.button.buttonPrimary, floodColor: palettePro.button.buttonPrimary }}
 							>
-								{'Reset'}
+								{'Verify'}
 							</Button>
-                            { this.state.resetStatus ? (<Redirect push to="/signIn/success"/>) : null }
+							{ this.state.resetStatus ? (<Redirect push to="/signIn/verify"/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
 							<Grid item>
 								<Link href='/signIn' variant='body2' sx={{ color: palettePro.link.linkPrimary}}>
-									{'Sign In'}
+									{'Account Verified? Sign In'}
 								</Link>
 							</Grid>
 						</Grid>
@@ -103,11 +132,11 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 							</Grid>
 							<Grid item>
 								<Link href='/signUp' variant='body2' sx={{ color: palettePro.link.linkPrimary}}>
-									{'Create Account'}
+									{'Do not have an account? Sign Up'}
 								</Link>
 							</Grid>
 						</Grid>
-                        {this.state.resetStatus === false &&
+						{this.state.resetStatus === false &&
 							<Grid container>
 								<Grid item xs>
 								</Grid>
@@ -120,7 +149,7 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 										color: '#ff6666',
 									}}>
 										<ErrorRoundedIcon htmlColor='#ff6666'/>
-										<span>{'Invalid Address Email'}</span>
+										<span>{'Invalid Address Email or Verification Code'}</span>
 									</div>
 								</Grid>
 							</Grid>
@@ -137,6 +166,11 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 		this.validateEmail(event.currentTarget.value);
 	}
 
+	private readonly handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({verificactionCode: event.currentTarget.value});
+		this.validateVerificationCode(event.currentTarget.value);
+	}
+
 	private readonly validateEmail = (email: string) => {
 		if (/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
 			this.setState({emailError: false});
@@ -145,20 +179,29 @@ export class ResetPassword extends React.Component<ResetPasswordProps, ResetPass
 		}
 	}
 
+	private readonly validateVerificationCode = (verificactionCode: string) => {
+		if (verificactionCode !== '') {
+			this.setState({verificactionCodeError: false});
+		} else {
+			this.setState({verificactionCodeError: true});
+		}
+	}
+
 	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        const {
+		const {
 			email,
+			verificactionCode,
 		} = this.state;
 		event.preventDefault();
-		return AuthenticationDataProvider.resetPassword(email)
-        .then(status => {
+		return AuthenticationDataProvider.verifyAccount(this.props.email !== undefined ? this.props.email : email, verificactionCode)
+		.then(status => {
 			console.log({
 				email: this.state.email,
 			});
 			if (status===201) {
-                this.setState({resetStatus: true});
+				this.setState({resetStatus: true});
 			} else {
-                this.setState({resetStatus: false});
+				this.setState({resetStatus: false});
 			}
 		}).catch(error => {
 			console.log({error});

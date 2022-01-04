@@ -152,6 +152,8 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 			} else {
                 this.setState({resetStatus: false});
 			}
-		})
+		}).catch(error => {
+			console.log({error});
+		});
 	};
 }

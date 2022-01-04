@@ -9,7 +9,7 @@ import { Survey } from './pages/Survey';
 import { SignIn } from './pages/authentication/SignIn';
 import { SignUp } from './pages/authentication/SignUp';
 import { ResetPassword } from './pages/authentication/ResetPassword';
-
+import { VerifyAccount } from './pages/authentication/VerifyAccount';
 
 class App extends React.Component {
 	public render () {
@@ -28,6 +28,12 @@ class App extends React.Component {
 					<Route exact path={'/signUp'}>
 						<SignUp/>
 					</Route>
+					<Route exact path={'/verifyAccount'}>
+					<VerifyAccount/>
+					</Route>
+					<Route exact path={'/verifyAccount/:email'} render={(props) => (
+    					<VerifyAccount email={props.match.params.email}/>)} 
+					/>
 					<Route exact path={'/resetPassword'}>
 						<ResetPassword/>
 					</Route>
