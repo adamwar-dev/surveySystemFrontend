@@ -17,7 +17,7 @@ class App extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path={'/'}>
-						<Redirect to='/signIn'/>
+						<Redirect to='/signIn'/*mainPage skipping login part*//>
 					</Route>
 					<Route exact path={'/signIn'}>
 						<SignIn/>

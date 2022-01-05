@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, TextField } from '@mui/material';
+import {Box, Button, Card, CardContent, TextField } from '@mui/material';
 import * as React from 'react';
 import { NavBar } from '../components/NavBar';
 import { Question, QuestionProps } from '../questions/Question';
@@ -46,6 +46,9 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 					}
 					linkTo='/create'
 				/>
+				<Box
+					sx={{mx: '40px', textAlign: 'center'}}
+				>
 				<Card>
 					<CardContent style={{backgroundColor: '#DDA0DD'}}>
 						<TextField
@@ -61,23 +64,30 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 				 	this.questionAddClick()
 				}
 				{renderQuestion}
+				<Box
+					sx={{mx: '120px', textAlign: 'center'}}
+				>
 				<Button 
 					variant="contained"
 					fullWidth
-					sx={{mt: '20px', textAlign: 'center'}}
+					sx={{mt: '10px', textAlign: 'center'}}
 					style={{backgroundColor:'#DDA0DD'}}
 					startIcon={<AddCircleRoundedIcon/>}
 					onClick={this.questionAddClick}
 				/>
+				</Box>
+				<Box textAlign='center'>
 				<Button 
 					variant="contained"
 					fullWidth
-					sx={{mt: '20px', textAlign: 'center'}}
-					style={{backgroundColor:'#916BBF'}}
+					sx={{mt: '30px', textAlign: 'center'}}
+					style={{backgroundColor:'#916BBF', maxWidth: '240px'}}
 					onClick={() => {}}
 				>
 				{'Send'}
 				</Button>
+				</Box>
+				</Box>
             </React.Fragment>
 		);
 	}
