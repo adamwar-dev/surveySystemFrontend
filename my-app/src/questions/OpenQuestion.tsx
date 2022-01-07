@@ -5,17 +5,32 @@ import { TextField } from '@mui/material';
 
 interface OpenQuestionProps {
 	placeholder?: string;
+	onChangeContent: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	questionContent: string;
 }
 
-export class OpenQuestion extends React.Component<OpenQuestionProps>{
+interface OpenQuestionState {
+	content: string;
+}
+
+export class OpenQuestion extends React.Component<OpenQuestionProps, OpenQuestionState>{
 	public constructor(props: OpenQuestionProps){
 		super(props);
+
+		this.state = {
+			content: '',
+		}
 	}
 
 	public render () {
 		const {
+			questionContent,
 			placeholder,
 		} = this.props;
+
+		const {
+			content,
+		} = this.state;
 		return (
 			<React.Fragment>
 				<Card>
@@ -25,11 +40,18 @@ export class OpenQuestion extends React.Component<OpenQuestionProps>{
 							label='Question'
 							placeholder={placeholder}
 							multiline
-							fullWidth			
+							fullWidth
+							value={questionContent}
+							onChange={this.handleContentChange}			
 						/>
 					</CardContent>
 				</Card>
 			</React.Fragment>
 		);
+	}
+
+	private readonly handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({content: event.currentTarget.value});
+		this.props.onChangeContent(event);
 	}
 }

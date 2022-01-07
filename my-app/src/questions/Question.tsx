@@ -7,21 +7,30 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { MultiChoiceQuestion } from './MultiChoiceQuestion';
 import { SingleChoiseQuestion } from './SingleChoiceQuestion';
 
+export interface QuestionData {
+	content: string,
+	type: QuestionType,
+	questionAnswers: string[],
+}
+
+type QuestionType = 'Open' | 'Single' | 'Multi';
 export interface QuestionProps {
 	numberOfQuestion: number;
 	OnDeleteClick: (numberOfQuestion: number) => void;
+	handleQuestionChange: (numberOfOption: number, updatedQuestion: QuestionData) => void;
 }
 
-interface QuestionState {
-	optionSelected: string;
+interface QuestionState extends QuestionData {
+	typeSelected: string;
 }
-
-
 export class Question extends React.Component<QuestionProps, QuestionState> {
 	public constructor(props: QuestionProps) {
 		super(props);
 		this.state = {
-			optionSelected: 'Open'
+			typeSelected: 'Open',
+			content: '',
+			type: 'Open',
+			questionAnswers: [],
 		}
 	}
 
@@ -32,7 +41,10 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 		} = this.props;
 
 		const {
-			optionSelected,
+			content,
+			type,
+			typeSelected,
+			questionAnswers,
 		} = this.state;
 
 		return (
@@ -52,9 +64,9 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 										<Select
 											labelId='label-type'
 											id='select'
-											value={optionSelected}
+											value={typeSelected}
 											label='Type'
-											onChange={this.handleChangeOption}
+											onChange={this.handleChangeType}
 										>
 											<MenuItem value={'Open'}>{'Open Question'}</MenuItem>
 											<MenuItem value={'Multi'}>{'Multiple Choice Question'}</MenuItem>
@@ -75,21 +87,118 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 							</Grid>
 						</Box>
 					</CardContent>
-					{optionSelected === 'Open' &&
-						<OpenQuestion placeholder={'e.g. What do you think about pizza?'}/>
+					{type === 'Open' &&
+						<OpenQuestion
+							onChangeContent={this.handleContentChange}
+							placeholder={'e.g. What do you think about pizza?'}
+							questionContent={content}
+						/>
 					}
-					{optionSelected === 'Single' &&
-						<SingleChoiseQuestion placeholder={'e.g. Which pizza you like best?'}/>
+					{type === 'Single' &&
+						<SingleChoiseQuestion
+							onChangeContent={this.handleContentChange}
+							handleOptionAdd={this.handleOptionAdd}
+							handleOptionChange={this.handleOptionChange}
+							handleOptionDelete={this.handleOptionDelete}
+							placeholder={'e.g. Which pizza you like best?'}
+							optionsData={questionAnswers}
+							questionContent={content}
+						/>
 					}
-					{optionSelected === 'Multi' &&
-						<MultiChoiceQuestion placeholder={'e.g. What pizzas do you know?'}/>
+					{type === 'Multi' &&
+						<MultiChoiceQuestion
+							onChangeContent={this.handleContentChange}
+							handleOptionAdd={this.handleOptionAdd}
+							handleOptionChange={this.handleOptionChange}
+							handleOptionDelete={this.handleOptionDelete}
+							placeholder={'e.g. What pizzas do you know?'}
+							optionsData={questionAnswers}
+							questionContent={content}
+						/>
 					}
 				</Card>		
 			</React.Fragment>
 		);
 	}
 
-	private readonly handleChangeOption = (event: SelectChangeEvent) => {
-		this.setState({optionSelected: event.target.value as string});
+	private readonly handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({content: event.currentTarget.value});
+		const data: QuestionData = {
+			content: event.currentTarget.value,
+			type: this.state.type,
+			questionAnswers: this.state.questionAnswers,
+		}
+		this.props.handleQuestionChange(this.props.numberOfQuestion, data);
+	}
+
+	private readonly handleOptionAdd = () => {
+		this.setState(previousState => ({
+			questionAnswers: [...previousState.questionAnswers, '']
+		}), () => {
+			const data: QuestionData = {
+				content: this.state.content,
+				type: this.state.type,
+				questionAnswers: this.state.questionAnswers,
+			}
+			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
+		});
+	}
+
+	private readonly handleOptionChange = (numberOfOption: number, newOption: string) => {
+		const {
+			questionAnswers,
+		} = this.state;
+
+		const updatedOptions = questionAnswers.map((option, index) => {
+			return numberOfOption !== index ? option : newOption;
+		});
+
+		this.setState({questionAnswers: updatedOptions}, () => {
+			const data: QuestionData = {
+				content: this.state.content,
+				type: this.state.type,
+				questionAnswers: this.state.questionAnswers,
+			}
+			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
+		});
+	}
+
+	private readonly handleOptionDelete = (numberOfOption: number) => {
+		const {
+			questionAnswers,
+		} = this.state;
+
+		const updatedOptions: string[] = [];
+
+		questionAnswers.forEach((option, index) => {
+			if(index !== numberOfOption) {
+				updatedOptions.push(option);
+			}
+		});
+
+		this.setState({questionAnswers: updatedOptions}, () => {
+			const data: QuestionData = {
+				content: this.state.content,
+				type: this.state.type,
+				questionAnswers: this.state.questionAnswers,
+			}
+			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
+		});
+	}
+
+	private readonly handleChangeType = (event: SelectChangeEvent) => {
+		this.setState({
+			typeSelected: event.target.value,
+			content: '',
+			type: event.target.value as QuestionType,
+			questionAnswers: [],
+		}, () => {
+			const data: QuestionData = {
+				content: this.state.content,
+				type: this.state.type,
+				questionAnswers: this.state.questionAnswers,
+			}
+			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
+		});
 	}
 }

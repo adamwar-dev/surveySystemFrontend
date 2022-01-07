@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, TextField } from '@mui/material';
 import * as React from 'react';
 import { NavBar } from '../components/NavBar';
-import { Question, QuestionProps } from '../questions/Question';
+import { Question, QuestionData, QuestionProps } from '../questions/Question';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 interface SurveyProps {
@@ -9,7 +9,11 @@ interface SurveyProps {
 }
 
 interface SurveyState {
+	title: string;
+	tokens: string;
+	numberOfTokens?: number;
 	questions: QuestionProps[];
+	questionsData : QuestionData[];
 }
 
 export class Survey extends React.Component<SurveyProps, SurveyState> {
@@ -17,7 +21,10 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 		super(props);
 
 		this.state = {
+			tokens: '',
+			title: '',
 			questions: [],
+			questionsData: [],
 		}
 	}
 
@@ -27,11 +34,19 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 		} = this.props;
 
 		const {
-			questions,
+			title,
+			tokens,
 		} = this.state;
 
 		const renderQuestion = this.state.questions.map((question, index) => {
-			return <Question key={index} numberOfQuestion={index} OnDeleteClick={question.OnDeleteClick}/>
+			return (
+				<Question 
+					key={index}
+					numberOfQuestion={index}
+					OnDeleteClick={question.OnDeleteClick}
+					handleQuestionChange={question.handleQuestionChange}
+				/>
+			)
 		});
 	
 		return (
@@ -51,14 +66,28 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 						<TextField
 							id='title'
 							label='Title'
-							placeholder='e.g. Survey about tasty food!'
+							placeholder='Number of Respondents'
 							multiline
-							fullWidth			
+							fullWidth
+							value={title}
+							onChange={this.handleTitleChange}			
 						/>
 					</CardContent>
 				</Card>
-				{questions.length < 1 &&
-				 	this.questionAddClick()
+				{surveyType === 'distributed' &&
+					<Card>
+						<CardContent style={{backgroundColor: '#DDA0DD'}}>
+							<TextField
+								id='Tokens'
+								label='Tokens'
+								placeholder='e.g. Survey about tasty food!'
+								multiline
+								fullWidth
+								value={tokens}
+								onChange={this.handleTokensChange}			
+							/>
+						</CardContent>
+					</Card>
 				}
 				{renderQuestion}
 				<Button 
@@ -74,7 +103,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 					fullWidth
 					sx={{mt: '20px', textAlign: 'center'}}
 					style={{backgroundColor:'#916BBF'}}
-					onClick={() => {}}
+					onClick={this.sendData}
 				>
 				{'Send'}
 				</Button>
@@ -82,17 +111,81 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 		);
 	}
 
-	private readonly questionAddClick = () => {
-		const another: QuestionProps = {
-			numberOfQuestion: this.state.questions.length,
-			OnDeleteClick: this.questionDeleteClick,
-		}
-		this.setState({questions: [...this.state.questions, another]});
+	private readonly handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({title: event.currentTarget.value});
 	}
 
+	private readonly handleTokensChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({tokens: event.currentTarget.value});
+	}
+
+	private readonly handleQuestionAdd = () => {
+		const questionData: QuestionData = {
+			content: '',
+			type: 'Open',
+			questionAnswers: [],
+		}
+		this.setState(previousState => ({
+			questionsData: [...previousState.questionsData, questionData]
+			})
+		);
+	}
+
+	private readonly handleQuestionChange = (numberOfOption: number, updatedQuestion: QuestionData) => {
+		const {
+			questionsData,
+		} = this.state;
+		const updatedQuestions = questionsData.map((question, index) => {
+			return numberOfOption !== index ? question : updatedQuestion;
+		});
+		this.setState({questionsData: updatedQuestions});
+	}
+
+	private readonly handleQuestionDelete = (numberOfQuestion: number) => {
+		const {
+			questionsData,
+		} = this.state;
+		const updatedQuestions: QuestionData[] = [];
+		questionsData.forEach((question, index) => {
+			if(index !== numberOfQuestion) {
+				updatedQuestions.push(question);
+			}
+		});
+		this.setState({questionsData: updatedQuestions});
+	}
+
+	private readonly questionAddClick = () => {
+		const question: QuestionProps = {
+			numberOfQuestion: this.state.questions.length,
+			OnDeleteClick: this.questionDeleteClick,
+			handleQuestionChange: this.handleQuestionChange,
+		}
+		this.setState({questions: [...this.state.questions, question]});
+		this.handleQuestionAdd();
+	}
+	
 	private readonly questionDeleteClick = (numberOfQuestion: number) => {
-		const questionAfterDeleteItem = this.state.questions;
-		questionAfterDeleteItem.splice(numberOfQuestion, 1);
-		this.setState({questions: questionAfterDeleteItem});
+		const {
+			questions,
+		} = this.state;
+		const updatedQuestions: QuestionProps[] = [];
+		questions.forEach((question, index) => {
+			if(index !== numberOfQuestion) {
+				updatedQuestions.push(question);
+			}
+		});
+		this.setState({questions: updatedQuestions});
+		this.handleQuestionDelete(numberOfQuestion);
+	}
+
+	private readonly sendData = () => {
+		const surveyData = {
+			title: this.state.title,
+			surveyType: this.props.surveyType,
+			tokens: this.state.tokens,
+			questions: this.state.questionsData,
+
+		}
+		console.log(surveyData);
 	}
 }

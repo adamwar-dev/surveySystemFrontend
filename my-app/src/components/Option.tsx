@@ -4,16 +4,22 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 export interface OptionProps {
 	optionNumber: number;
+	content: string;
+	handleOptionChange: (numberOfOption: number, newOption: string) => void;
 	OnDeleteClick: (optionNumber: number) => void;
+	placeholder?: string;
 }
 export class Option extends React.Component<OptionProps> {
 	public constructor(props: OptionProps) {
 		super(props);
+
 	}
 	public render () {
 		const {
 			optionNumber,
 			OnDeleteClick,
+			content,
+			placeholder,
 		} = this.props;
 
 		return (
@@ -30,13 +36,15 @@ export class Option extends React.Component<OptionProps> {
 						<TextField
 							id='option'
 							label='option'
-							placeholder={'e.g. Pepperoni'}
+							placeholder={placeholder}
 							multiline
-							fullWidth			
+							fullWidth
+							value={content}
+							onChange={this.handleChange}	
 						/>
 					</Grid>
 					<Grid item xs={1}>
-						{optionNumber > 1 &&
+						{optionNumber >= 0 &&
 							<Button 
 								variant="contained"
 								fullWidth
@@ -49,5 +57,9 @@ export class Option extends React.Component<OptionProps> {
 				</Grid>
 			</Box>
 		);
+	}
+
+	private readonly handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.props.handleOptionChange(this.props.optionNumber, event.currentTarget.value);
 	}
 }
