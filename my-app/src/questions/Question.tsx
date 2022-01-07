@@ -11,6 +11,7 @@ export interface QuestionData {
 	content: string,
 	type: QuestionType,
 	questionAnswers: string[],
+	respondentsAnswers: string[],
 }
 
 type QuestionType = 'Open' | 'Single' | 'Multi';
@@ -31,6 +32,7 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 			content: '',
 			type: 'Open',
 			questionAnswers: [],
+			respondentsAnswers: [],
 		}
 	}
 
@@ -41,7 +43,6 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 		} = this.props;
 
 		const {
-			content,
 			type,
 			typeSelected,
 			questionAnswers,
@@ -91,7 +92,6 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 						<OpenQuestion
 							onChangeContent={this.handleContentChange}
 							placeholder={'e.g. What do you think about pizza?'}
-							questionContent={content}
 						/>
 					}
 					{type === 'Single' &&
@@ -102,7 +102,6 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 							handleOptionDelete={this.handleOptionDelete}
 							placeholder={'e.g. Which pizza you like best?'}
 							optionsData={questionAnswers}
-							questionContent={content}
 						/>
 					}
 					{type === 'Multi' &&
@@ -113,7 +112,6 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 							handleOptionDelete={this.handleOptionDelete}
 							placeholder={'e.g. What pizzas do you know?'}
 							optionsData={questionAnswers}
-							questionContent={content}
 						/>
 					}
 				</Card>		
@@ -127,6 +125,7 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 			content: event.currentTarget.value,
 			type: this.state.type,
 			questionAnswers: this.state.questionAnswers,
+			respondentsAnswers: [],
 		}
 		this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 	}
@@ -139,6 +138,7 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 				content: this.state.content,
 				type: this.state.type,
 				questionAnswers: this.state.questionAnswers,
+				respondentsAnswers: [],
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});
@@ -158,6 +158,7 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 				content: this.state.content,
 				type: this.state.type,
 				questionAnswers: this.state.questionAnswers,
+				respondentsAnswers: [],
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});
@@ -181,6 +182,7 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 				content: this.state.content,
 				type: this.state.type,
 				questionAnswers: this.state.questionAnswers,
+				respondentsAnswers: [],
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});
@@ -197,6 +199,7 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 				content: this.state.content,
 				type: this.state.type,
 				questionAnswers: this.state.questionAnswers,
+				respondentsAnswers: [],
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});

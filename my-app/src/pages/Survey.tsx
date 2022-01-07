@@ -6,6 +6,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 interface SurveyProps {
 	surveyType: string;
+	token: string;
 }
 
 interface SurveyState {
@@ -59,7 +60,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 							'Private Survey' :
 							'Distributed Survey'
 					}
-					linkTo='/create'
+					linkTo={'/create/' + this.props.token}
 				/>
 				<Box
 					sx={{mx: '40px', textAlign: 'center'}}
@@ -134,6 +135,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 			content: '',
 			type: 'Open',
 			questionAnswers: [],
+			respondentsAnswers: [],
 		}
 		this.setState(previousState => ({
 			questionsData: [...previousState.questionsData, questionData]
@@ -191,10 +193,10 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 	private readonly sendData = () => {
 		const surveyData = {
 			title: this.state.title,
+			creatorId: this.props.token,
 			surveyType: this.props.surveyType,
 			tokens: this.state.tokens,
 			questions: this.state.questionsData,
-
 		}
 		console.log(surveyData);
 	}

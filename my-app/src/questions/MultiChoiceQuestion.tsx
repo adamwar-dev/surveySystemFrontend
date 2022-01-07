@@ -5,7 +5,6 @@ import { OpenQuestion } from './OpenQuestion';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 interface MultiChoiceQuestionProps {
-	questionContent: string;
 	placeholder?: string;
 	optionsData: string[];
 	onChangeContent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -30,7 +29,6 @@ export class MultiChoiceQuestion extends React.Component<MultiChoiceQuestionProp
 	public render () {
 		const {
 			onChangeContent,
-			questionContent,
 			placeholder,
 			optionsData,
 		} = this.props;
@@ -53,7 +51,6 @@ export class MultiChoiceQuestion extends React.Component<MultiChoiceQuestionProp
 				<OpenQuestion
 					onChangeContent={onChangeContent} 
 					placeholder={placeholder}
-					questionContent={questionContent}
 				/>
 				<Card>
 					<CardContent style={{backgroundColor:'#E6E6FA'}} sx={{alignItems:'center', justifyContent:'center' }}>

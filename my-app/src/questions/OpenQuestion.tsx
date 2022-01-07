@@ -6,7 +6,6 @@ import { TextField } from '@mui/material';
 interface OpenQuestionProps {
 	placeholder?: string;
 	onChangeContent: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	questionContent: string;
 }
 
 interface OpenQuestionState {
@@ -24,7 +23,6 @@ export class OpenQuestion extends React.Component<OpenQuestionProps, OpenQuestio
 
 	public render () {
 		const {
-			questionContent,
 			placeholder,
 		} = this.props;
 
@@ -41,7 +39,7 @@ export class OpenQuestion extends React.Component<OpenQuestionProps, OpenQuestio
 							placeholder={placeholder}
 							multiline
 							fullWidth
-							value={questionContent}
+							value={content}
 							onChange={this.handleContentChange}			
 						/>
 					</CardContent>
