@@ -94,6 +94,5 @@ export class AuthenticationDataProvider {
 			return data;
 		});
 	}
-
 }
 

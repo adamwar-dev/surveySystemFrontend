@@ -41,7 +41,7 @@ export class MainPage extends React.Component<mainPageProps> {
 							<Tile primaryText='Create a Survey' linkTo={'/create/'+ token} icon={<AssignmentRoundedIcon sx={{color: '#916BBF'}} fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
-							<Tile primaryText='Surveys History' linkTo='/history' icon={<HistoryEduRoundedIcon sx={{color: '#916BBF'}} fontSize='large'/>}/>
+							<Tile primaryText='Surveys History' linkTo={'/history/' + token} icon={<HistoryEduRoundedIcon sx={{color: '#916BBF'}} fontSize='large'/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
 							<Tile primaryText='Profile' linkTo={'/profile/' + this.props.token } icon={<AccountBoxRoundedIcon sx={{color: '#916BBF'}} fontSize='large'/>}/>

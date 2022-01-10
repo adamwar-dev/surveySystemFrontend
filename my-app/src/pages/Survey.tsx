@@ -3,6 +3,7 @@ import * as React from 'react';
 import { NavBar } from '../components/NavBar';
 import { Question, QuestionData, QuestionProps } from '../questions/Question';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { SurveyDataProvider } from '../data/SurveyDataProvider';
 
 interface SurveyProps {
 	surveyType: string;
@@ -132,10 +133,9 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 
 	private readonly handleQuestionAdd = () => {
 		const questionData: QuestionData = {
-			content: '',
-			type: 'Open',
-			questionAnswers: [],
-			respondentsAnswers: [],
+			Content: '',
+			Type: 'Open',
+			QuestionAnswers: [],
 		}
 		this.setState(previousState => ({
 			questionsData: [...previousState.questionsData, questionData]
@@ -195,9 +195,16 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 			title: this.state.title,
 			creatorId: this.props.token,
 			surveyType: this.props.surveyType,
-			tokens: this.state.tokens,
+			tokens: Number(this.state.tokens),
 			questions: this.state.questionsData,
 		}
 		console.log(surveyData);
+		if (surveyData.surveyType === 'public') {
+			SurveyDataProvider.createPublicSurvey(surveyData);
+		} else if (surveyData.surveyType === 'private') {
+			SurveyDataProvider.createPrivateSurvey(surveyData);
+		} else {
+			SurveyDataProvider.createDistributedSurvey(surveyData);
+		}
 	}
 }

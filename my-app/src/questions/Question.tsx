@@ -8,13 +8,12 @@ import { MultiChoiceQuestion } from './MultiChoiceQuestion';
 import { SingleChoiseQuestion } from './SingleChoiceQuestion';
 
 export interface QuestionData {
-	content: string,
-	type: QuestionType,
-	questionAnswers: string[],
-	respondentsAnswers: string[],
+	Content: string,
+	Type: QuestionType,
+	QuestionAnswers: string[],
 }
 
-type QuestionType = 'Open' | 'Single' | 'Multi';
+type QuestionType = 'Open' | 'OneChoice' | 'MultipleChoice';
 export interface QuestionProps {
 	numberOfQuestion: number;
 	OnDeleteClick: (numberOfQuestion: number) => void;
@@ -29,10 +28,9 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 		super(props);
 		this.state = {
 			typeSelected: 'Open',
-			content: '',
-			type: 'Open',
-			questionAnswers: [],
-			respondentsAnswers: [],
+			Content: '',
+			Type: 'Open',
+			QuestionAnswers: [],
 		}
 	}
 
@@ -43,9 +41,9 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 		} = this.props;
 
 		const {
-			type,
+			Type,
 			typeSelected,
-			questionAnswers,
+			QuestionAnswers,
 		} = this.state;
 
 		return (
@@ -70,8 +68,8 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 											onChange={this.handleChangeType}
 										>
 											<MenuItem value={'Open'}>{'Open Question'}</MenuItem>
-											<MenuItem value={'Multi'}>{'Multiple Choice Question'}</MenuItem>
-											<MenuItem value={'Single'}>{'Single Choise Question'}</MenuItem>
+											<MenuItem value={'OneChoice'}>{'Multiple Choice Question'}</MenuItem>
+											<MenuItem value={'MultipleChoice'}>{'Single Choise Question'}</MenuItem>
 										</Select>
 									</FormControl>
 								</Grid>
@@ -88,30 +86,30 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 							</Grid>
 						</Box>
 					</CardContent>
-					{type === 'Open' &&
+					{Type === 'Open' &&
 						<OpenQuestion
 							onChangeContent={this.handleContentChange}
 							placeholder={'e.g. What do you think about pizza?'}
 						/>
 					}
-					{type === 'Single' &&
+					{Type === 'OneChoice' &&
 						<SingleChoiseQuestion
 							onChangeContent={this.handleContentChange}
 							handleOptionAdd={this.handleOptionAdd}
 							handleOptionChange={this.handleOptionChange}
 							handleOptionDelete={this.handleOptionDelete}
 							placeholder={'e.g. Which pizza you like best?'}
-							optionsData={questionAnswers}
+							optionsData={QuestionAnswers}
 						/>
 					}
-					{type === 'Multi' &&
+					{Type === 'MultipleChoice' &&
 						<MultiChoiceQuestion
 							onChangeContent={this.handleContentChange}
 							handleOptionAdd={this.handleOptionAdd}
 							handleOptionChange={this.handleOptionChange}
 							handleOptionDelete={this.handleOptionDelete}
 							placeholder={'e.g. What pizzas do you know?'}
-							optionsData={questionAnswers}
+							optionsData={QuestionAnswers}
 						/>
 					}
 				</Card>		
@@ -120,25 +118,23 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 	}
 
 	private readonly handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		this.setState({content: event.currentTarget.value});
+		this.setState({Content: event.currentTarget.value});
 		const data: QuestionData = {
-			content: event.currentTarget.value,
-			type: this.state.type,
-			questionAnswers: this.state.questionAnswers,
-			respondentsAnswers: [],
+			Content: event.currentTarget.value,
+			Type: this.state.Type,
+			QuestionAnswers: this.state.QuestionAnswers,
 		}
 		this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 	}
 
 	private readonly handleOptionAdd = () => {
 		this.setState(previousState => ({
-			questionAnswers: [...previousState.questionAnswers, '']
+			QuestionAnswers: [...previousState.QuestionAnswers, '']
 		}), () => {
 			const data: QuestionData = {
-				content: this.state.content,
-				type: this.state.type,
-				questionAnswers: this.state.questionAnswers,
-				respondentsAnswers: [],
+				Content: this.state.Content,
+				Type: this.state.Type,
+				QuestionAnswers: this.state.QuestionAnswers,
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});
@@ -146,19 +142,18 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 
 	private readonly handleOptionChange = (numberOfOption: number, newOption: string) => {
 		const {
-			questionAnswers,
+			QuestionAnswers,
 		} = this.state;
 
-		const updatedOptions = questionAnswers.map((option, index) => {
+		const updatedOptions = QuestionAnswers.map((option, index) => {
 			return numberOfOption !== index ? option : newOption;
 		});
 
-		this.setState({questionAnswers: updatedOptions}, () => {
+		this.setState({QuestionAnswers: updatedOptions}, () => {
 			const data: QuestionData = {
-				content: this.state.content,
-				type: this.state.type,
-				questionAnswers: this.state.questionAnswers,
-				respondentsAnswers: [],
+				Content: this.state.Content,
+				Type: this.state.Type,
+				QuestionAnswers: this.state.QuestionAnswers,
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});
@@ -166,23 +161,22 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 
 	private readonly handleOptionDelete = (numberOfOption: number) => {
 		const {
-			questionAnswers,
+			QuestionAnswers,
 		} = this.state;
 
 		const updatedOptions: string[] = [];
 
-		questionAnswers.forEach((option, index) => {
+		QuestionAnswers.forEach((option, index) => {
 			if(index !== numberOfOption) {
 				updatedOptions.push(option);
 			}
 		});
 
-		this.setState({questionAnswers: updatedOptions}, () => {
+		this.setState({QuestionAnswers: updatedOptions}, () => {
 			const data: QuestionData = {
-				content: this.state.content,
-				type: this.state.type,
-				questionAnswers: this.state.questionAnswers,
-				respondentsAnswers: [],
+				Content: this.state.Content,
+				Type: this.state.Type,
+				QuestionAnswers: this.state.QuestionAnswers,
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});
@@ -191,15 +185,14 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 	private readonly handleChangeType = (event: SelectChangeEvent) => {
 		this.setState({
 			typeSelected: event.target.value,
-			content: '',
-			type: event.target.value as QuestionType,
-			questionAnswers: [],
+			Content: '',
+			Type: event.target.value as QuestionType,
+			QuestionAnswers: [],
 		}, () => {
 			const data: QuestionData = {
-				content: this.state.content,
-				type: this.state.type,
-				questionAnswers: this.state.questionAnswers,
-				respondentsAnswers: [],
+				Content: this.state.Content,
+				Type: this.state.Type,
+				QuestionAnswers: this.state.QuestionAnswers,
 			}
 			this.props.handleQuestionChange(this.props.numberOfQuestion, data);
 		});

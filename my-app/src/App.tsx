@@ -46,9 +46,9 @@ class App extends React.Component {
 					<Route exact path={'/create/:token'} render={(props) => (
     					<CreateSurvey token={props.match.params.token}/>)} 
 					/>
-					<Route path={'/history'}>
-						<HistorySurvey/>
-					</Route>
+					<Route exact path={'/history/:token'} render={(props) => (
+    					<HistorySurvey token={props.match.params.token}/>)} 
+					/>
 					<Route exact path={'/profile/:token'} render={(props) => (
     					<Profile token={props.match.params.token}/>)} 
 					/>

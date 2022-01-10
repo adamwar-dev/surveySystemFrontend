@@ -20,7 +20,7 @@ export class CreateSurvey extends React.Component<CreateSurveyProps>{
                 <NavBar backArrowVisable={true} barText={'Create a Survey'} linkTo={'/mainPage/' + this.props.token}/>
 				<Box sx={{ flexGrow: 1, width:'100%', height:'85vh'}}>
 					<Grid container spacing={10} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{mb:'30px'}}>
-					<Grid item xs={12} sm={6} md={4}>
+						<Grid item xs={12} sm={6} md={4}>
 							<Tile primaryText='Public Survey' linkTo={'/survey/public/' + this.props.token} icon={<PublicRoundedIcon sx={{color: '#916BBF'}} fontSize={'large'}/>}/>
 						</Grid>
 						<Grid item xs={12} sm={6} md={4}>
