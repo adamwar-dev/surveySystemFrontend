@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import * as React from 'react';
-import { NavBar } from '../components/NavBar';
-import { Tile } from '../components/Tile';
+import { NavBar } from '../../components/NavBar';
+import { Tile } from '../../components/Tile';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import PublicOffRoundedIcon from '@mui/icons-material/PublicOffRounded';
 import SupervisorAccountRoundedIcon from '@mui/icons-material/SupervisorAccountRounded';

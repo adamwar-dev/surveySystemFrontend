@@ -4,11 +4,13 @@ import Link from '@mui/material/Link';
 import { Box, Button, Grid } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import { SurveyQuestions } from '../pages/surveys/HistorySurvey';
 
 interface SurveyInHistoryProps {
 	id: string;
 	type: string;
 	title: string;
+	questions: SurveyQuestions[];
 }
 
 export class SurveyInHistory extends React.Component<SurveyInHistoryProps> {
@@ -21,6 +23,7 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps> {
 			id,
 			type,
 			title,
+			questions,
 		} = this.props;
 		return (
 			<Box sx={{ flexGrow: 1, width:'100%', mb: '20px'}}>

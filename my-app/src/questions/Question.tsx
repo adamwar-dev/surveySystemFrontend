@@ -8,9 +8,9 @@ import { MultiChoiceQuestion } from './MultiChoiceQuestion';
 import { SingleChoiseQuestion } from './SingleChoiceQuestion';
 
 export interface QuestionData {
-	Content: string,
-	Type: QuestionType,
-	QuestionAnswers: string[],
+	Content: string;
+	Type: QuestionType;
+	QuestionAnswers: string[];
 }
 
 type QuestionType = 'Open' | 'OneChoice' | 'MultipleChoice';

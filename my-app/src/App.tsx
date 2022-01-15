@@ -3,9 +3,9 @@ import './App.css';
 import { BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import { MainPage } from './pages/MainPage'
 import { Profile } from './pages/Profile';
-import { CreateSurvey } from './pages/CreateSurvey';
-import { HistorySurvey } from './pages/HistorySurvey';
-import { Survey } from './pages/Survey';
+import { CreateSurvey } from './pages/surveys/CreateSurvey';
+import { HistorySurvey } from './pages/surveys/HistorySurvey';
+import { Survey } from './pages/surveys/Survey';
 import { SignIn } from './pages/authentication/SignIn';
 import { SignUp } from './pages/authentication/SignUp';
 import { ResetPassword } from './pages/authentication/ResetPassword';

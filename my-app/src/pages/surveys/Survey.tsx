@@ -1,9 +1,9 @@
 import {Box, Button, Card, CardContent, TextField } from '@mui/material';
 import * as React from 'react';
-import { NavBar } from '../components/NavBar';
-import { Question, QuestionData, QuestionProps } from '../questions/Question';
+import { NavBar } from '../../components/NavBar';
+import { Question, QuestionData, QuestionProps } from '../../questions/Question';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { SurveyDataProvider } from '../data/SurveyDataProvider';
+import { SurveyDataProvider } from '../../data/SurveyDataProvider';
 
 interface SurveyProps {
 	surveyType: string;
