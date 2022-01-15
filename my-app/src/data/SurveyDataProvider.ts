@@ -83,5 +83,19 @@ export class SurveyDataProvider {
 		});
 	}
 
-    
+    public static getSingleSurvey(token: string, surveyToken: string) {
+        let data: any = "";
+		return axios.get('http://localhost:5000/surveys/statistics/' + surveyToken , {
+            headers: {
+				'Authorization': 'Bearer ' + token,
+            },
+        }).then(res => {
+			console.log(res.data);
+            data = res.data;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+    }
 }

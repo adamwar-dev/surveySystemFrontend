@@ -10,6 +10,7 @@ import { SignIn } from './pages/authentication/SignIn';
 import { SignUp } from './pages/authentication/SignUp';
 import { ResetPassword } from './pages/authentication/ResetPassword';
 import { VerifyAccount } from './pages/authentication/VerifyAccount';
+import { PreviewSurvey } from './pages/surveys/PreviewSurvey';
 
 class App extends React.Component {
 	public render () {
@@ -48,6 +49,12 @@ class App extends React.Component {
 					/>
 					<Route exact path={'/history/:token'} render={(props) => (
     					<HistorySurvey token={props.match.params.token}/>)} 
+					/>
+					<Route exact path={'/preview/:token/:surveyToken'} render={(props) => (
+    					<PreviewSurvey 
+							userToken={props.match.params.token}
+							surveyToken={props.match.params.surveyToken}
+						/>)} 
 					/>
 					<Route exact path={'/profile/:token'} render={(props) => (
     					<Profile token={props.match.params.token}/>)} 

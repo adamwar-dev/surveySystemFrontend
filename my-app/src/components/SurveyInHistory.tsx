@@ -4,13 +4,12 @@ import Link from '@mui/material/Link';
 import { Box, Button, Grid } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
-import { SurveyQuestions } from '../pages/surveys/HistorySurvey';
 
 interface SurveyInHistoryProps {
+	token: string;
 	id: string;
 	type: string;
 	title: string;
-	questions: SurveyQuestions[];
 }
 
 export class SurveyInHistory extends React.Component<SurveyInHistoryProps> {
@@ -20,10 +19,10 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps> {
 
 	public render () {
 		const {
+			token,
 			id,
 			type,
 			title,
-			questions,
 		} = this.props;
 		return (
 			<Box sx={{ flexGrow: 1, width:'100%', mb: '20px'}}>
@@ -34,7 +33,7 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps> {
 					justifyContent="center"
 					columnSpacing={{ xs: 2, sm: 2, md: 3 }}
 				>
-					<Link href={'/'} underline={'none'}>
+					<Link href={'/preview/' + token + '/' + id} underline={'none'}>
 						<Grid item xs={12} sm={12} md={12}>
 							<Typography
 								align='left'
