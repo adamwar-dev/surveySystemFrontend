@@ -66,7 +66,7 @@ export class SurveyDataProvider {
 	}
 
     public static getAllUserSurveys(token: string) {
-        let status = 0;
+        let data: any = "";
 		return axios.get(`http://localhost:5000/surveys`, {
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -75,11 +75,11 @@ export class SurveyDataProvider {
             }
         }).then(res => {
 			console.log(res.data);
-			status = res.status;
-			return status;
+            data = res.data;
+			return data;
 		}).catch(er => {
 			console.log(er);
-			return status;
+			return data;
 		});
 	}
 

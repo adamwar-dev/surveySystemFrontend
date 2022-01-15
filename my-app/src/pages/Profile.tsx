@@ -32,9 +32,9 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 	public constructor(props: ProfileProps) {
 		super(props);
 		this.state = {
-			password: 'polskagurom',
+			password: 'zaktualizowac z bazy',
 			showPassword: false,
-			email: 'mariuszpudzian@sztanga.pl',
+			email: '',
 			resetStatus: undefined,
 		}
 	}
