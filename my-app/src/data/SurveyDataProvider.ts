@@ -83,9 +83,9 @@ export class SurveyDataProvider {
 		});
 	}
 
-    public static getSingleSurvey(token: string, surveyToken: string) {
+    public static getSingleSurvey(token: string, surveyId: string) {
         let data: any = "";
-		return axios.get('http://localhost:5000/surveys/statistics/' + surveyToken , {
+		return axios.get('http://localhost:5000/surveys/statistics/' + surveyId , {
             headers: {
 				'Authorization': 'Bearer ' + token,
             },
@@ -98,4 +98,37 @@ export class SurveyDataProvider {
 			return data;
 		});
     }
+
+    public static getPublicSurvey(surveyId: string) {
+        let data: any = "";
+		return axios.get('http://localhost:5000/surveys/public/' + surveyId)
+        .then(res => {
+			console.log(res.data);
+            data = res.data;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+    }
+
+    public static answerPublicSurvey(surveyId: string, answers: QuestionsAnswers[]) {
+        let data: any = "";
+		return axios.post('http://localhost:5000/surveys/answer/publicSurvey', {
+            SurveyId: surveyId,
+            Answers: answers,
+        }).then(res => {
+			console.log(res.data);
+            data = res.data;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+    }
+}
+
+export interface QuestionsAnswers {
+    questionId: string;
+    Answers: string[];
 }

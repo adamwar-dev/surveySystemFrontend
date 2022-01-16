@@ -11,6 +11,8 @@ import { SignUp } from './pages/authentication/SignUp';
 import { ResetPassword } from './pages/authentication/ResetPassword';
 import { VerifyAccount } from './pages/authentication/VerifyAccount';
 import { PreviewSurvey } from './pages/surveys/PreviewSurvey';
+import { FillSurvey } from './pages/surveys/FillSurvey';
+import { FillPublicSurvey } from './pages/surveys/FillPublicSurvey';
 
 class App extends React.Component {
 	public render () {
@@ -25,6 +27,12 @@ class App extends React.Component {
 					</Route>
 					<Route exact path={'/signIn/:status'} render={(props) => (
     					<SignIn status={props.match.params.status}/>)} 
+					/>
+					<Route exact path={'/signIn/:status/:id'} render={(props) => (
+    					<SignIn 
+							status={props.match.params.status}
+							surveyId={props.match.params.id}
+						/>)} 
 					/>
 					<Route exact path={'/signUp'}>
 						<SignUp/>
@@ -66,6 +74,20 @@ class App extends React.Component {
 						/>
 						)} 
 					/>
+					<Route exact path={'/fillSurvey/:type/:id'} render={(props) => (
+    					<FillSurvey 
+							surveyType={props.match.params.type}
+							surveyId={props.match.params.id}
+						/>
+						)} 
+					/>
+					<Route exact path={'/fillPublicSurvey/:id'} render={(props) => (
+    					<FillPublicSurvey 
+							surveyId={props.match.params.id}
+						/>
+						)}
+					/>
+					
 				</Switch>
 			</Router>
 		);

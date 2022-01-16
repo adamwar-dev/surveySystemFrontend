@@ -17,6 +17,7 @@ import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 
 interface SingInProps {
 	status?: string;
+	surveyId?: string;
 }
 
 export interface SignInState {

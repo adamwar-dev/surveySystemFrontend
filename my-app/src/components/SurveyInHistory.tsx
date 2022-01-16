@@ -61,7 +61,7 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps> {
 							fullWidth
 							style={{backgroundColor:'#D8BFD8'}}
 							startIcon={<ContentCopyRoundedIcon sx={{mr: '-8px'}}/>}
-							onClick={() => {navigator.clipboard.writeText("/fillSurvey/" + id)}}
+							onClick={() => {navigator.clipboard.writeText("http://localhost:3000/fillSurvey/" + type + '/' + id)}}
 						/>
 					</Grid>
 				</Grid>
