@@ -68,8 +68,8 @@ export class Question extends React.Component<QuestionProps, QuestionState> {
 											onChange={this.handleChangeType}
 										>
 											<MenuItem value={'Open'}>{'Open Question'}</MenuItem>
-											<MenuItem value={'OneChoice'}>{'Multiple Choice Question'}</MenuItem>
-											<MenuItem value={'MultipleChoice'}>{'Single Choise Question'}</MenuItem>
+											<MenuItem value={'OneChoice'}>{'Single Choice Question'}</MenuItem>
+											<MenuItem value={'MultipleChoice'}>{'Multiple Choise Question'}</MenuItem>
 										</Select>
 									</FormControl>
 								</Grid>

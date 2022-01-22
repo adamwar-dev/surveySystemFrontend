@@ -1,6 +1,8 @@
 import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import * as React from 'react';
+import { Footer } from '../../components/Footer';
 import { QuestionsAnswers, SurveyDataProvider } from '../../data/SurveyDataProvider';
+import { AnswerChoiceQuestion } from '../../questions/AnswerChoiceQuestion';
 import { AnswerOpenQuestion } from '../../questions/AnswerOpenQuestion';
 
 interface FillPublicProps {
@@ -12,7 +14,6 @@ interface QuestionToAnswer {
     type: string;
     content: string;
     questionAnswers: string[];
-    respondentsAnswers: string[];
     currentAnswers: string[];
     number: number;
 }
@@ -47,12 +48,12 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
                     type: questionData.Type,
                     content: questionData.Content,
                     questionAnswers: questionData.QuestionAnswers,
-                    respondentsAnswers: questionData.RespondentsAnswers,
                     number: survey.Questions.indexOf(questionData) + 1,
                     currentAnswers: [],
                 }
                 this.setState(previousState => ({
-                    questions: [...previousState.questions, question]}));
+                    questions: [...previousState.questions, question],
+                }));
             });
         });
     }
@@ -61,14 +62,36 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
         const renderQuestions = this.state.questions.map((question, index) => {
 			return (
                 <React.Fragment>
-                {question.type === 'Open' &&
-                    <AnswerOpenQuestion
-                        key={index}
-                        questionId={question.id}
-                        questionValue={question.content}
-                        onChangeAnswer={this.handlePublicQuestionAnswerChange}
-                        number={question.number}
-                    />
+                    {question.type === 'Open' &&
+                        <AnswerOpenQuestion
+                            key={index}
+                            questionId={question.id}
+                            questionValue={question.content}
+                            onChangeAnswer={this.handleQuestionAnswerChange}
+                            number={question.number}
+                        />
+                    }
+                    {question.type === 'OneChoice' &&
+                        <AnswerChoiceQuestion
+                            multi={false}
+                            key={index}
+                            questionId={question.id}
+                            questionValue={question.content}
+                            questionAnswers={question.questionAnswers}
+                            onChangeAnswer={this.handleQuestionAnswerChange}
+                            number={question.number}
+                        />
+                    }
+                    {question.type === 'MultipleChoice' &&
+                        <AnswerChoiceQuestion
+                            multi={true}
+                            key={index}
+                            questionId={question.id}
+                            questionValue={question.content}
+                            questionAnswers={question.questionAnswers}
+                            onChangeAnswer={this.handleQuestionAnswerChange}
+                            number={question.number}
+                        />
                     }
                 </React.Fragment>
 			)
@@ -95,7 +118,7 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
                         </CardContent>
 				    </Card>
                     {renderQuestions}
-                    <Button 
+                    <Button
                         variant="contained"
                         fullWidth
                         sx={{mt: '30px', textAlign: 'center'}}
@@ -105,21 +128,23 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
                     {'Send'}
                     </Button>
                 </Box>
+                <Footer/>
             </React.Fragment>
 		);
 	}
 
-    private readonly handlePublicQuestionAnswerChange = (questionId: string, currentAnswers: string[]) => {
+    private readonly handleQuestionAnswerChange = (questionId: string, currentAnswers: string[]) => {
 		const {
 			questions,
 		} = this.state;
+
+        console.log(currentAnswers);
 		const updatedQuestions = questions.map((question) => {
             const updatedQuestion: QuestionToAnswer = {
                 id: question.id,
                 type: question.type,
                 content: question.content,
                 questionAnswers: question.questionAnswers,
-                respondentsAnswers: question.respondentsAnswers,
                 currentAnswers: currentAnswers,
                 number: question.number,
             }
@@ -133,7 +158,7 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
         this.state.questions.forEach(question => {
             const questionAnswers: QuestionsAnswers = {
                 questionId: question.id,
-                Answers: question.respondentsAnswers.concat(question.currentAnswers),
+                Answers: question.currentAnswers,
             }
             questionsAnswers.push(questionAnswers);
         })
