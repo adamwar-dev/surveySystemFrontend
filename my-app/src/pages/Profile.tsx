@@ -7,8 +7,6 @@ import { Box,
 		InputAdornment, 
 		InputLabel, 
 		OutlinedInput } from '@mui/material';
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
-import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
 import { NavBar } from '../components/NavBar';
@@ -19,8 +17,6 @@ import { Redirect } from 'react-router-dom';
 
 interface ProfileState {
 	email: string;
-	password: string;
-	showPassword: boolean;
 	resetStatus?: boolean;
 }
 
@@ -32,8 +28,6 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 	public constructor(props: ProfileProps) {
 		super(props);
 		this.state = {
-			password: 'zaktualizowac z bazy',
-			showPassword: false,
 			email: '',
 			resetStatus: undefined,
 		}
@@ -49,8 +43,6 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 	public render () {
 		const {
 			email,
-			password,
-			showPassword,
 		} = this.state;
 		return (
 			<React.Fragment>
@@ -82,34 +74,6 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 							</FormControl>
 						</Grid>
 						<Grid item xs={12} textAlign='center'>
-							<FormControl variant="outlined">
-								<InputLabel htmlFor="outlined-adornment-password" sx={{color: '#916BBF'}}>Password</InputLabel>
-								<OutlinedInput
-									id="outlined-adornment-password"
-									type={showPassword ? 'text' : 'password'}
-									value={password}
-									placeholder={'enter password'}
-									onChange={this.handleChangePassword()}
-									endAdornment={
-									<InputAdornment position="end">
-										<IconButton
-										aria-label="toggle password visibility"
-										onClick={this.handleChangeShowPassword(!showPassword)}
-										onMouseDown={this.handleMouseDownPassword}
-										edge="end"
-										>
-										{showPassword ? 
-											<VisibilityOffRoundedIcon  sx={{color: '#916BBF'}}/> : 
-											<VisibilityRoundedIcon  sx={{color: '#916BBF'}}/>
-										}
-										</IconButton>
-									</InputAdornment>
-									}
-									label="Password"
-								/>
-							</FormControl>
-						</Grid>
-						<Grid item xs={12} textAlign='center'>
 							<Button
 								type='submit'
 								variant='contained'
@@ -124,18 +88,6 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 			</React.Fragment>
 		);
 	}
-
-	private readonly handleChangePassword = () => (event: React.ChangeEvent<HTMLInputElement>) => {
-		this.setState({password: event.target.value});
-	};
-
-	private readonly handleChangeShowPassword = (showPassword: boolean) => () => {
-		this.setState({showPassword});
-	};
-
-	private readonly handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-		event.preventDefault();
-	};
 
 	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		const {

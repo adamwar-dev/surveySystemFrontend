@@ -93,7 +93,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 							<TextField
 								id='Tokens'
 								label='Tokens'
-								placeholder='e.g. Survey about tasty food!'
+								placeholder='e.g. 100'
 								multiline
 								fullWidth
 								value={tokens}

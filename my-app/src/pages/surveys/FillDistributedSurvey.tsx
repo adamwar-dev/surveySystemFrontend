@@ -165,7 +165,7 @@ export class FillDistributedSurvey extends React.Component<FillDistributedProps,
 		})
 		return SurveyDataProvider.answerDistributedSurvey(this.props.surveyId, questionsAnswers, this.props.token, this.props.surveyToken)
 		.then(status => {
-			this.setState({redirectToFinalPage: true, status: status});
+			this.setState({redirectToFinalPage: true, status: status !== '' ? status : 'error'});
 		});
 	}
 }

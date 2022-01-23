@@ -172,7 +172,7 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
 		})
 		return SurveyDataProvider.answerPublicSurvey(this.props.surveyId, questionsAnswers)
 		.then(status => {
-			this.setState({redirectToFinalPage: true, status: status});
+			this.setState({redirectToFinalPage: true, status: status !== '' ? status : 'error'});
 		});
 	}
 }

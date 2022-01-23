@@ -158,7 +158,7 @@ export class FillPrivateSurvey extends React.Component<FillPrivateProps, FillPri
 		})
 		return SurveyDataProvider.answerPrivateSurvey(this.props.surveyId, questionsAnswers, this.props.token)
 		.then(status => {
-			this.setState({redirectToFinalPage: true, status: status});
+			this.setState({redirectToFinalPage: true, status: status !== '' ? status : 'error'});
 		});
 	}
 }
