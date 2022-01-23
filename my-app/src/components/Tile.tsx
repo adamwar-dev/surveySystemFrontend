@@ -10,7 +10,7 @@ interface TileProps {
 	icon?: React.ReactElement;
 }
 
-export class Tile extends React.Component<TileProps>{
+export class Tile extends React.Component<TileProps> {
 	public constructor(props: TileProps) {
 		super(props);
 	}

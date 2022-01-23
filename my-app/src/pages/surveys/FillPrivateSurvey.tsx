@@ -5,30 +5,17 @@ import { Footer } from '../../components/Footer';
 import { QuestionsAnswers, SurveyDataProvider } from '../../data/SurveyDataProvider';
 import { AnswerChoiceQuestion } from '../../questions/AnswerChoiceQuestion';
 import { AnswerOpenQuestion } from '../../questions/AnswerOpenQuestion';
+import { FillPublicProps, FillPublicSurveyState, QuestionToAnswer } from './FillPublicSurvey';
 
-export interface FillPublicProps {
-	surveyId: string;
+interface FillPrivateProps extends FillPublicProps {
+	token: string;
 }
 
-export interface QuestionToAnswer {
-	id: string;
-	type: string;
-	content: string;
-	questionAnswers: string[];
-	currentAnswers: string[];
-	number: number;
+interface FillPrivateSurveyState extends FillPublicSurveyState {
 }
 
-export interface FillPublicSurveyState {
-	title: string;
-	type: string;
-	questions: QuestionToAnswer[];
-	redirectToFinalPage: boolean;
-	status?: number;
-}
-
-export class FillPublicSurvey extends React.Component<FillPublicProps, FillPublicSurveyState> {
-	public constructor(props: FillPublicProps) {
+export class FillPrivateSurvey extends React.Component<FillPrivateProps, FillPrivateSurveyState> {
+	public constructor(props: FillPrivateProps) {
 		super(props);
 
 		this.state = {
@@ -36,12 +23,11 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
 			type: '',
 			questions: [],
 			redirectToFinalPage: false,
-			status: undefined,
 		}
 	}
 
 	public componentDidMount () {
-		return SurveyDataProvider.getPublicSurvey(this.props.surveyId)
+		return SurveyDataProvider.getPrivateSurvey(this.props.surveyId, this.props.token)
 		.then(survey => {
 			this.setState({
 			title: survey.Title,
@@ -170,7 +156,7 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
 			}
 			questionsAnswers.push(questionAnswers);
 		})
-		return SurveyDataProvider.answerPublicSurvey(this.props.surveyId, questionsAnswers)
+		return SurveyDataProvider.answerPrivateSurvey(this.props.surveyId, questionsAnswers, this.props.token)
 		.then(status => {
 			this.setState({redirectToFinalPage: true, status: status});
 		});

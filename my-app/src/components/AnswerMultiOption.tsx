@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Grid, Radio, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Radio, TextField } from '@mui/material';
 
 interface AnswerMultiOptionProps {
 	optionNumber: number;
@@ -37,7 +37,7 @@ export class AnswerMultiOption extends React.Component<AnswerMultiOptionProps, A
 				container
 				spacing={0}
 				alignItems="center"
-  				justifyContent="center"
+				justifyContent="center"
 				columnSpacing={{ xs: 2, sm: 2, md: 3 }}
 				sx={{py: '10px'}}
 				>
@@ -49,17 +49,17 @@ export class AnswerMultiOption extends React.Component<AnswerMultiOptionProps, A
 							value={optionNumber + '. ' + content}
 							sx = {{color: '#D8BFD8', ".MuiInputBase-input.Mui-disabled": {
 								WebkitTextFillColor: "black",
-							  }}}
+							}}}
 						/>
 					</Grid>
 					<Grid item xs={1}>
-                        <Radio
-                            checked={checked}
-                            onChange={this.handleChange}
-                            value={content}
-                            name="radio-buttons"
+						<Radio
+							checked={checked}
+							onChange={this.handleChange}
+							value={content}
+							name="radio-buttons"
 							sx = {{color: '#D8BFD8', '&.Mui-checked': { color: '#916BBF'}}}
-                        />
+						/>
 					</Grid>
 					<Grid item xs={1}>
 						<Button

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Box, Grid, Radio, TextField, Typography } from '@mui/material';
+import { Box, Grid, Radio, TextField } from '@mui/material';
 
 interface AnswerSingleOptionProps {
 	optionNumber: number;
 	content: string;
-    value: string;
+	value: string;
 	onChangeAnswerOption: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -20,7 +20,7 @@ export class AnswerSingleOption extends React.Component<AnswerSingleOptionProps>
 	public render () {
 
 		const {
-            value,
+			value,
 			optionNumber,
 			content,
 		} = this.props;
@@ -31,7 +31,7 @@ export class AnswerSingleOption extends React.Component<AnswerSingleOptionProps>
 				container
 				spacing={0}
 				alignItems="center"
-  				justifyContent="center"
+				justifyContent="center"
 				columnSpacing={{ xs: 3, sm: 3, md: 3 }}
 				sx={{py: '10px'}}
 				>
@@ -47,15 +47,15 @@ export class AnswerSingleOption extends React.Component<AnswerSingleOptionProps>
 						/>
 					</Grid>
 					<Grid item xs={1}>
-                        <Radio
-                            checked={content === value}
-                            onChange={this.props.onChangeAnswerOption}
-                            value={content}
-                            name="radio-buttons"
+						<Radio
+							checked={content === value}
+							onChange={this.props.onChangeAnswerOption}
+							value={content}
+							name="radio-buttons"
 							sx = {{color: '#D8BFD8', '&.Mui-checked': { color: '#916BBF'}}}
-                        />
+						/>
 					</Grid>
-                    <Grid item xs={1}>
+					<Grid item xs={1}>
 					</Grid>
 				</Grid>
 			</Box>

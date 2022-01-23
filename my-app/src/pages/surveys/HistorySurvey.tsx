@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import * as React from 'react';
 import { NavBar } from '../../components/NavBar';
 import { SurveyInHistory } from '../../components/SurveyInHistory';
@@ -10,6 +11,7 @@ export interface SurveyData {
 }
 interface HistorySurveyProps {
 	token?: string;
+	status?: string;
 }
 
 interface HistorySurveyState {
@@ -40,6 +42,10 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 	}
 
 	public render () {
+		const {
+			status,
+		} = this.props;
+
 		const renderSurvey = this.state.surveys.map((survey, index) => {
 			return (
 				<SurveyInHistory 
@@ -55,6 +61,16 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 		return (
 			<React.Fragment>
                 <NavBar backArrowVisable={true} barText={'History'} linkTo={'/mainPage/' + this.props.token}/>
+				{status === '201' &&
+					<Typography color={'#47d147'} align='center' sx={{mb:'40px'}}>
+						{'New survey created successfully!'}
+					</Typography>
+				}
+				{status !== '201' && status !== undefined &&
+					<Typography color={'#ff1a1a'} align='center' sx={{mb:'40px'}}>
+						{'Error occurred while creating survey :('}
+					</Typography>
+				}
 				{renderSurvey}
             </React.Fragment>
 		);

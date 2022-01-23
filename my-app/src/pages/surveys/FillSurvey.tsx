@@ -19,7 +19,9 @@ export class FillSurvey extends React.Component<FillSurveyProps> {
 		return (
 			<React.Fragment>
                { surveyType === 'Public' ? (<Redirect push to={"/fillPublicSurvey/" + surveyId}/>) 
-                : (<Redirect push to={"/signIn/filling/" + surveyId}/>)}
+                : surveyType === 'Private' ? (<Redirect push to={"/signIn/fillingPrivate/" + surveyId}/>)
+				: (<Redirect push to={"/signIn/fillingDistributed/" + surveyId}/>)
+				}
             </React.Fragment>
 		);
 	}

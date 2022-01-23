@@ -28,6 +28,8 @@ export interface SignInState {
 	redirect?: boolean;
 	token?: string;
 	status?: string;
+	redirectToPrivateSurvey?: boolean;
+	redirectToDistributedSurvey?: boolean;
 }
 
 export class SignIn extends React.Component<SingInProps, SignInState> {
@@ -40,6 +42,8 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 			emailError: true,
 			passwordError: true,
 			redirect: undefined,
+			redirectToPrivateSurvey: undefined,
+			redirectToDistributedSurvey: undefined,
 			token: '',
 			status: '',
 		}
@@ -54,6 +58,9 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 	}
 
 	public render () {
+		const {
+			surveyId,
+		} = this.props;
 		const {
 			email,
 			password,
@@ -120,6 +127,8 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 							{'Sign In'}
 						</Button>
 						{ this.state.redirect ? (<Redirect push to={"/mainPage/" + token}/>) : null }
+						{ this.state.redirectToPrivateSurvey ? (<Redirect push to={"/fillPrivateSurvey/" + token + '/' + surveyId}/>) : null }
+						{ this.state.redirectToDistributedSurvey ? (<Redirect push to={"/fillDistributedSurvey/" + token + '/' + surveyId}/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>
@@ -251,7 +260,14 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 				password: this.state.password,
 			});
 			if (newToken!=='') {
-				this.setState({ token: newToken, redirect: true });
+				if (this.props.status === 'fillingPrivate') {
+					this.setState({token: newToken, redirectToPrivateSurvey: true});
+				} else if (this.props.status === 'fillingDistributed') {
+					this.setState({token: newToken, redirectToDistributedSurvey: true});
+				}
+				else {
+					this.setState({ token: newToken, redirect: true });
+				}
 			} else {
 				this.setState({ redirect: false });
 			}

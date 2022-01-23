@@ -54,7 +54,7 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 		} = this.state;
 		return (
 			<React.Fragment>
-                <NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo={'/mainPage/' + this.props.token}/>
+				<NavBar backArrowVisable={true} barText={'Welcome to your Profile'} linkTo={'/mainPage/' + this.props.token}/>
 				<Box  component='form' onSubmit={this.handleSubmit} sx={{ flexGrow: 1, width:'100%'}}>
 					<Grid container spacing={3} alignContent='center' columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 						<Grid item xs={12} textAlign='center'>
@@ -121,7 +121,7 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 						</Grid>
 					</Grid>
 				</Box>
-            </React.Fragment>
+			</React.Fragment>
 		);
 	}
 
@@ -138,19 +138,19 @@ export class Profile extends React.Component<ProfileProps,ProfileState>{
 	};
 
 	private readonly handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        const {
+		const {
 			email,
 		} = this.state;
 		event.preventDefault();
 		return AuthenticationDataProvider.resetPassword(email)
-        .then(status => {
+		.then(status => {
 			console.log({
 				email: this.state.email,
 			});
 			if (status===201) {
-                this.setState({resetStatus: true});
+				this.setState({resetStatus: true});
 			} else {
-                this.setState({resetStatus: false});
+				this.setState({resetStatus: false});
 			}
 		}).catch(error => {
 			console.log({error});
