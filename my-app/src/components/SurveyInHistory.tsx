@@ -12,6 +12,7 @@ interface SurveyInHistoryProps {
 	type: string;
 	title: string;
 	tokens?: string[];
+	onDelete: (surveyId: string, token: string) => void;
 }
 
 interface SurveyInHistoryState {
@@ -64,7 +65,7 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps, Surve
 							fullWidth
 							style={{backgroundColor:'#D8BFD8'}}
 							startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
-							onClick={() => {}}
+							onClick={this.handleSurveyDelete}
 						/>
 					</Grid>
 					<Grid item xs={12} sm={12} md={12}>
@@ -87,11 +88,15 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps, Surve
 			</Box>
 		);
 	}
+
+	private readonly handleSurveyDelete = () => {
+		this.props.onDelete(this.props.id, this.props.token);
+	}
 }
 
   const ITEM_HEIGHT = 48;
 
-  export default function LongMenu(props: {tokens: string[]}) {
+export default function LongMenu(props: {tokens: string[]}) {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -138,4 +143,4 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps, Surve
 		</Menu>
 	  </React.Fragment>
 	);
-  }
+}

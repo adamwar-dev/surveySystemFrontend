@@ -205,6 +205,24 @@ export class SurveyDataProvider {
 			return data;
 		});
 	}
+
+	public static deleteSurvey(surveyId: string, token: string) {
+		let data: any = "";
+		return axios.delete('http://localhost:5000/surveys/' + surveyId, {
+			headers: {
+				'Authorization': 'Bearer ' + token,
+				'Accept' : 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(res => {
+			console.log(res.data);
+			data = res.status;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+	}
 }
 
 export interface QuestionsAnswers {

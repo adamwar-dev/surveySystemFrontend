@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import * as React from 'react';
+import { Redirect } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar';
 import { SurveyInHistory } from '../../components/SurveyInHistory';
 import { SurveyDataProvider } from '../../data/SurveyDataProvider';
@@ -17,6 +18,7 @@ interface HistorySurveyProps {
 
 interface HistorySurveyState {
 	surveys: SurveyData[];
+	redirectOnDelete: boolean;
 }
 export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySurveyState> {
 	public constructor(props: HistorySurveyProps) {
@@ -24,6 +26,7 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 
 		this.state = {
 			surveys: [],
+			redirectOnDelete: false,
 		}
 	}
 
@@ -58,6 +61,7 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 						id={survey.id}
 						type={survey.type}
 						title={survey.title}
+						onDelete={this.handleSurveyDelete}
 					/>
 				}
 				{survey.type === 'Distributed' &&
@@ -68,6 +72,7 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 						type={survey.type}
 						title={survey.title}
 						tokens={survey.tokens}
+						onDelete={this.handleSurveyDelete}
 					/>
 				}
 				</React.Fragment>
@@ -82,13 +87,28 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 						{'New survey created successfully!'}
 					</Typography>
 				}
-				{status !== '201' && status !== undefined &&
+				{status !== '201' && status !== 'deleted' && status !== undefined &&
 					<Typography color={'#ff1a1a'} align='center' sx={{mb:'40px'}}>
 						{'Error occurred while creating survey :('}
 					</Typography>
 				}
+				{status === 'deleted' &&
+					<Typography color={'#47d147'} align='center' sx={{mb:'40px'}}>
+						{'Survey deleted successfully!'}
+					</Typography>
+				}
+				{this.state.redirectOnDelete ? (<Redirect push to={'/history/' + this.props.token + '/deleted'} />) : null}
 				{renderSurvey}
             </React.Fragment>
 		);
+	}
+
+	private readonly handleSurveyDelete = (surveyId: string, token: string) => {
+		return SurveyDataProvider.deleteSurvey(surveyId, token)
+		.then(status => {
+			if (status === 200) {
+				this.setState({redirectOnDelete: true});
+			}
+		});
 	}
 }
