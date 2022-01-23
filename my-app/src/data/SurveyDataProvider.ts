@@ -164,15 +164,41 @@ export class SurveyDataProvider {
 		});
 	}
 
-	public static getDistributedSurvey(surveyId: string, token: string) {
+	public static getDistributedSurvey( token: string, surveyId: string, surveyToken: string) {
 		let data: any = "";
-		return axios.get('http://localhost:5000/surveys/distributed/' + surveyId, {
+		return axios.post('http://localhost:5000/surveys/distributed/' + surveyId, {
+			token: surveyToken,
+		}, { 
 			headers: {
 				'Authorization': 'Bearer ' + token,
+				'Accept' : 'application/json',
+				'Content-Type': 'application/json'
 			},
 		}).then(res => {
 			console.log(res.data);
 			data = res.data;
+			return data;
+		}).catch(er => {
+			console.log(er);
+			return data;
+		});
+	}
+
+	public static answerDistributedSurvey(surveyId: string, answers: QuestionsAnswers[], token: string, surveyToken: string) {
+		let data: any = "";
+		return axios.post('http://localhost:5000/surveys/answer/distributedSurvey', {
+			SurveyId: surveyId,
+			Answers: answers,
+			Token: surveyToken,
+		}, {
+			headers: {
+				'Authorization': 'Bearer ' + token,
+				'Accept' : 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(res => {
+			console.log(res.data);
+			data = res.status;
 			return data;
 		}).catch(er => {
 			console.log(er);

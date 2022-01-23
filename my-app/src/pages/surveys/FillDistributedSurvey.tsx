@@ -9,6 +9,7 @@ import { FillPublicProps, FillPublicSurveyState, QuestionToAnswer } from './Fill
 
 interface FillDistributedProps extends FillPublicProps {
 	token: string;
+	surveyToken: string;
 }
 
 interface FillDistributedSurveyState extends FillPublicSurveyState {
@@ -31,7 +32,7 @@ export class FillDistributedSurvey extends React.Component<FillDistributedProps,
 	}
 
 	public componentDidMount () {
-		return SurveyDataProvider.getDistributedSurvey(this.props.surveyId, this.props.token)
+		return SurveyDataProvider.getDistributedSurvey(this.props.token, this.props.surveyId, this.props.surveyToken)
 		.then(survey => {
 			this.setState({
 			title: survey.Title,
@@ -162,7 +163,7 @@ export class FillDistributedSurvey extends React.Component<FillDistributedProps,
 			}
 			questionsAnswers.push(questionAnswers);
 		})
-		return SurveyDataProvider.answerPrivateSurvey(this.props.surveyId, questionsAnswers, this.props.token)
+		return SurveyDataProvider.answerDistributedSurvey(this.props.surveyId, questionsAnswers, this.props.token, this.props.surveyToken)
 		.then(status => {
 			this.setState({redirectToFinalPage: true, status: status});
 		});

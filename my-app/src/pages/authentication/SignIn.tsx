@@ -128,7 +128,7 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 						</Button>
 						{ this.state.redirect ? (<Redirect push to={"/mainPage/" + token}/>) : null }
 						{ this.state.redirectToPrivateSurvey ? (<Redirect push to={"/fillPrivateSurvey/" + token + '/' + surveyId}/>) : null }
-						{ this.state.redirectToDistributedSurvey ? (<Redirect push to={"/fillDistributedSurvey/" + token + '/' + surveyId}/>) : null }
+						{ this.state.redirectToDistributedSurvey ? (<Redirect push to={"/distributedToken/" + token + '/' + surveyId}/>) : null }
 						<Grid container>
 							<Grid item xs>
 							</Grid>

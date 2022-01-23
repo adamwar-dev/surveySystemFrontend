@@ -8,6 +8,7 @@ export interface SurveyData {
 	id: string;
 	type: string;
 	title: string;
+	tokens?: string[];
 }
 interface HistorySurveyProps {
 	token?: string;
@@ -34,6 +35,7 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 					id: survey._id,
 					type: survey.Type,
 					title: survey.Title,
+					tokens: survey.Tokens,
 				}
 				this.setState(previousState => ({
 				surveys: [...previousState.surveys, surveyData]}));
@@ -48,13 +50,27 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 
 		const renderSurvey = this.state.surveys.map((survey, index) => {
 			return (
-				<SurveyInHistory 
-					key={index}
-					token={this.props.token!}
-					id={survey.id}
-					type={survey.type}
-					title={survey.title}
-				/>
+				<React.Fragment>
+				{survey.type !== 'Distributed' &&
+					<SurveyInHistory 
+						key={index}
+						token={this.props.token!}
+						id={survey.id}
+						type={survey.type}
+						title={survey.title}
+					/>
+				}
+				{survey.type === 'Distributed' &&
+					<SurveyInHistory 
+						key={index}
+						token={this.props.token!}
+						id={survey.id}
+						type={survey.type}
+						title={survey.title}
+						tokens={survey.tokens}
+					/>
+				}
+				</React.Fragment>
 			)
 		});
 

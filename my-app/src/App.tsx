@@ -16,6 +16,7 @@ import { FillPublicSurvey } from './pages/surveys/FillPublicSurvey';
 import { FillPrivateSurvey } from './pages/surveys/FillPrivateSurvey';
 import { FinalPage } from './pages/FinalPage';
 import { FillDistributedSurvey } from './pages/surveys/FillDistributedSurvey';
+import { DistributedTokenPage } from './pages/surveys/DistributedTokenPage';
 
 class App extends React.Component {
 	public render () {
@@ -103,8 +104,16 @@ class App extends React.Component {
 						/>
 						)}
 					/>
-					<Route exact path={'/fillDistributedSurvey/:token/:id'} render={(props) => (
+					<Route exact path={'/fillDistributedSurvey/:token/:id/:surveyToken'} render={(props) => (
     					<FillDistributedSurvey
+							token={props.match.params.token}
+							surveyId={props.match.params.id}
+							surveyToken={props.match.params.surveyToken}
+						/>
+						)}
+					/>
+					<Route exact path={'/distributedToken/:token/:id'} render={(props) => (
+    					<DistributedTokenPage
 							token={props.match.params.token}
 							surveyId={props.match.params.id}
 						/>
