@@ -13,6 +13,10 @@ import { VerifyAccount } from './pages/authentication/VerifyAccount';
 import { PreviewSurvey } from './pages/surveys/PreviewSurvey';
 import { FillSurvey } from './pages/surveys/FillSurvey';
 import { FillPublicSurvey } from './pages/surveys/FillPublicSurvey';
+import { FillPrivateSurvey } from './pages/surveys/FillPrivateSurvey';
+import { FinalPage } from './pages/FinalPage';
+import { FillDistributedSurvey } from './pages/surveys/FillDistributedSurvey';
+import { DistributedTokenPage } from './pages/surveys/DistributedTokenPage';
 
 class App extends React.Component {
 	public render () {
@@ -58,6 +62,12 @@ class App extends React.Component {
 					<Route exact path={'/history/:token'} render={(props) => (
     					<HistorySurvey token={props.match.params.token}/>)} 
 					/>
+					<Route exact path={'/history/:token/:status'} render={(props) => (
+    					<HistorySurvey 
+							token={props.match.params.token}
+							status={props.match.params.status}
+						/>)} 
+					/>
 					<Route exact path={'/preview/:token/:surveyToken'} render={(props) => (
     					<PreviewSurvey 
 							userToken={props.match.params.token}
@@ -87,7 +97,34 @@ class App extends React.Component {
 						/>
 						)}
 					/>
-					
+					<Route exact path={'/fillPrivateSurvey/:token/:id'} render={(props) => (
+    					<FillPrivateSurvey
+							token={props.match.params.token}
+							surveyId={props.match.params.id}
+						/>
+						)}
+					/>
+					<Route exact path={'/fillDistributedSurvey/:token/:id/:surveyToken'} render={(props) => (
+    					<FillDistributedSurvey
+							token={props.match.params.token}
+							surveyId={props.match.params.id}
+							surveyToken={props.match.params.surveyToken}
+						/>
+						)}
+					/>
+					<Route exact path={'/distributedToken/:token/:id'} render={(props) => (
+    					<DistributedTokenPage
+							token={props.match.params.token}
+							surveyId={props.match.params.id}
+						/>
+						)}
+					/>
+					<Route exact path={'/finalPage/:status'} render={(props) => (
+    					<FinalPage
+							status={props.match.params.status}
+						/>
+						)}
+					/>
 				</Switch>
 			</Router>
 		);

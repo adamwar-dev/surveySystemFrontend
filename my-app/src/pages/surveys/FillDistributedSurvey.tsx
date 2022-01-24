@@ -5,30 +5,20 @@ import { Footer } from '../../components/Footer';
 import { QuestionsAnswers, SurveyDataProvider } from '../../data/SurveyDataProvider';
 import { AnswerChoiceQuestion } from '../../questions/AnswerChoiceQuestion';
 import { AnswerOpenQuestion } from '../../questions/AnswerOpenQuestion';
+import { FillPublicProps, FillPublicSurveyState, QuestionToAnswer } from './FillPublicSurvey';
 
-export interface FillPublicProps {
-	surveyId: string;
+interface FillDistributedProps extends FillPublicProps {
+	token: string;
+	surveyToken: string;
 }
 
-export interface QuestionToAnswer {
-	id: string;
-	type: string;
-	content: string;
-	questionAnswers: string[];
-	currentAnswers: string[];
-	number: number;
+interface FillDistributedSurveyState extends FillPublicSurveyState {
+	surveyToken: string;
+	noSurveyTokensLeft: boolean;
 }
 
-export interface FillPublicSurveyState {
-	title: string;
-	type: string;
-	questions: QuestionToAnswer[];
-	redirectToFinalPage: boolean;
-	status?: number;
-}
-
-export class FillPublicSurvey extends React.Component<FillPublicProps, FillPublicSurveyState> {
-	public constructor(props: FillPublicProps) {
+export class FillDistributedSurvey extends React.Component<FillDistributedProps, FillDistributedSurveyState> {
+	public constructor(props: FillDistributedProps) {
 		super(props);
 
 		this.state = {
@@ -36,30 +26,33 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
 			type: '',
 			questions: [],
 			redirectToFinalPage: false,
-			status: undefined,
+			surveyToken: '',
+			noSurveyTokensLeft: false,
 		}
 	}
 
 	public componentDidMount () {
-		return SurveyDataProvider.getPublicSurvey(this.props.surveyId)
+		return SurveyDataProvider.getDistributedSurvey(this.props.token, this.props.surveyId, this.props.surveyToken)
 		.then(survey => {
 			this.setState({
 			title: survey.Title,
 			type: survey.Type,
 			});
-			survey.Questions.forEach((questionData: any) => {
-				const question: QuestionToAnswer = {
-					id: questionData._id,
-					type: questionData.Type,
-					content: questionData.Content,
-					questionAnswers: questionData.QuestionAnswers,
-					number: survey.Questions.indexOf(questionData) + 1,
-					currentAnswers: [],
-				}
-				this.setState(previousState => ({
-					questions: [...previousState.questions, question],
-				}));
-			});
+			if (survey.Questions) {
+				survey.Questions.forEach((questionData: any) => {
+					const question: QuestionToAnswer = {
+						id: questionData._id,
+						type: questionData.Type,
+						content: questionData.Content,
+						questionAnswers: questionData.QuestionAnswers,
+						number: survey.Questions.indexOf(questionData) + 1,
+						currentAnswers: [],
+					}
+					this.setState(previousState => ({
+						questions: [...previousState.questions, question],
+					}));
+				});
+			}
 		});
 	}
 
@@ -170,7 +163,7 @@ export class FillPublicSurvey extends React.Component<FillPublicProps, FillPubli
 			}
 			questionsAnswers.push(questionAnswers);
 		})
-		return SurveyDataProvider.answerPublicSurvey(this.props.surveyId, questionsAnswers)
+		return SurveyDataProvider.answerDistributedSurvey(this.props.surveyId, questionsAnswers, this.props.token, this.props.surveyToken)
 		.then(status => {
 			this.setState({redirectToFinalPage: true, status: status !== '' ? status : 'error'});
 		});

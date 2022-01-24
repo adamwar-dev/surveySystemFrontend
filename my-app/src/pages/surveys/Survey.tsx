@@ -4,6 +4,7 @@ import { NavBar } from '../../components/NavBar';
 import { Question, QuestionData, QuestionProps } from '../../questions/Question';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { SurveyDataProvider } from '../../data/SurveyDataProvider';
+import { Redirect } from 'react-router-dom';
 
 interface SurveyProps {
 	surveyType: string;
@@ -15,7 +16,9 @@ interface SurveyState {
 	tokens: string;
 	numberOfTokens?: number;
 	questions: QuestionProps[];
-	questionsData : QuestionData[];
+	questionsData: QuestionData[];
+	redirectToHistory: boolean;
+	status?: number;
 }
 
 export class Survey extends React.Component<SurveyProps, SurveyState> {
@@ -27,17 +30,22 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 			title: '',
 			questions: [],
 			questionsData: [],
+			redirectToHistory: false,
+			status: undefined,
 		}
 	}
 
 	public render () {
 		const {
 			surveyType,
+			token,
 		} = this.props;
 
 		const {
 			title,
 			tokens,
+			redirectToHistory,
+			status,
 		} = this.state;
 
 		const renderQuestion = this.state.questions.map((question, index) => {
@@ -85,7 +93,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 							<TextField
 								id='Tokens'
 								label='Tokens'
-								placeholder='e.g. Survey about tasty food!'
+								placeholder='e.g. 100'
 								multiline
 								fullWidth
 								value={tokens}
@@ -117,6 +125,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 				>
 				{'Send'}
 				</Button>
+				{redirectToHistory ? (<Redirect push to={'/history/' + token + '/' + status}/>) : null}
 				</Box>
 				</Box>
             </React.Fragment>
@@ -200,11 +209,20 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 		}
 		console.log(surveyData);
 		if (surveyData.surveyType === 'public') {
-			SurveyDataProvider.createPublicSurvey(surveyData);
+			SurveyDataProvider.createPublicSurvey(surveyData)
+			.then(status => {
+				this.setState({redirectToHistory: true, status: status});
+			});
 		} else if (surveyData.surveyType === 'private') {
-			SurveyDataProvider.createPrivateSurvey(surveyData);
+			SurveyDataProvider.createPrivateSurvey(surveyData)
+			.then(status => {
+				this.setState({redirectToHistory: true, status: status});
+			});
 		} else {
-			SurveyDataProvider.createDistributedSurvey(surveyData);
+			SurveyDataProvider.createDistributedSurvey(surveyData)
+			.then(status => {
+				this.setState({redirectToHistory: true, status: status});
+			});
 		}
 	}
 }

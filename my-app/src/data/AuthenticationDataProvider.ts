@@ -84,7 +84,7 @@ export class AuthenticationDataProvider {
 		return axios.get(`http://localhost:5001/authorization/profile`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
-			  }
+			}
 		}).then(res => {
 			console.log(res.data);
 			data = res.data.email;
