@@ -1,9 +1,10 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import {Box, Card, CardContent, Typography } from '@mui/material';
 import * as React from 'react';
 import { NavBar } from '../../components/NavBar';
 import { SurveyDataProvider } from '../../data/SurveyDataProvider';
 import { QuestionData } from '../../questions/Question';
 import { SurveyData } from './HistorySurvey';
+import {ColoredLine} from "../../components/Utils";
 
 interface SurveyQuestion extends QuestionData {
 	RespondentsAnswers: string[];
@@ -65,8 +66,10 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 				)
 			});
 			return (
+				<Box mt={5}>
 				<Card sx={{ml: '30px', mr: '30px'}}>
 					<CardContent>
+						<Box  sx={{ borderRadius: 2 }}>
 						<Typography
 							color="text.primary"
 							align='center'
@@ -77,15 +80,19 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 						>
 							{index + 1 + '. ' + question.Content}
 						</Typography>
+						</Box>
+						{ColoredLine('#d0b3ff')}
 						{questionAnswers}
 					</CardContent>
 				</Card>
+				</Box>
 			)
 		});
 
 		return (
 			<React.Fragment>
 				<NavBar backArrowVisable={true} barText={'History'} linkTo={'/history/' + this.props.userToken!}/>
+				<Box mt={{mb: '200px', mt:'200px'}}>
 				<Card sx={{ml: '30px', mr: '30px'}}>
 					<CardContent>
 						<Typography
@@ -100,8 +107,11 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 						</Typography>
 					</CardContent>
 				</Card>
+				</Box>
 				{renderQuestions}
 			</React.Fragment>
 		);
 	}
+
+
 }
