@@ -59,7 +59,7 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 							singleOrMultiNumber++;
 						} 
 					});
-					const singleOrMultiPrecent = singleOrMultiNumber/question.RespondentsAnswers.length * 100 + '%';
+					const singleOrMultiPrecent = Math.round(singleOrMultiNumber/question.RespondentsAnswers.length * 100 * 100) / 100;
 					return(
 					<React.Fragment>
 						<TextField
@@ -89,7 +89,7 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 							component='div'
 							sx={{ flexGrow: 1 }}
 						>
-							{'Percent: ' + singleOrMultiPrecent}
+							{'Percent: ' + singleOrMultiPrecent + '%'}
 						</Typography>
 					</React.Fragment>
 					)

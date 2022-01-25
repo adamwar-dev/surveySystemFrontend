@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { Box, Button, Grid, Menu, MenuItem } from '@mui/material';
+import { Box, Button, Grid, Menu, MenuItem, Card, CardContent } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 import VpnKeyRoundedIcon from '@mui/icons-material/VpnKeyRounded';
@@ -40,58 +40,62 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps, Surve
 
 		return (
 			<Box sx={{ flexGrow: 1, width:'100%', mb: '20px'}}>
-				<Grid
-					container
-					spacing={0}
-					alignItems="center"
-					justifyContent="center"
-					columnSpacing={{ xs: 2, sm: 2, md: 3 }}
-				>
-					<Link href={'/preview/' + token + '/' + id} underline={'none'}>
-						<Grid item xs={12} sm={12} md={12}>
-							<Typography
-								align='left'
-								paragraph
-								variant='h6'
-								component='div'
-								sx={{ flexGrow: 1 }}
-							>
-								{title}
-							</Typography>
+				<Card sx={{ml: '30px', mr: '30px'}}>
+					<CardContent>
+						<Grid
+							container
+							spacing={0}
+							alignItems="center"
+							justifyContent="center"
+							columnSpacing={{ xs: 2, sm: 2, md: 3 }}
+						>
+							<Link href={'/preview/' + token + '/' + id} underline={'none'}>
+								<Grid item xs={12} sm={12} md={12}>
+									<Typography
+										align='left'
+										paragraph
+										variant='h6'
+										component='div'
+										sx={{ flexGrow: 1 }}
+									>
+										{title}
+									</Typography>
+								</Grid>
+							</Link>
+							<Grid item xs={12} sm={12} md={12}>
+								<Box sx={{mb: '5px'}}>
+								<Button
+									variant="contained"
+									fullWidth
+									style={{backgroundColor:'#D8BFD8'}}
+									startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
+									onClick={this.handleSurveyDelete}
+								/>
+								</Box>
+							</Grid>
+							<Grid item xs={12} sm={12} md={12}>
+								<Box sx={{mb: '5px'}}>
+								<Button 
+									variant="contained"
+									fullWidth
+									style={{backgroundColor:'#D8BFD8'}}
+									startIcon={<ContentCopyRoundedIcon sx={{mr: '-8px'}}/>}
+									onClick={() => {navigator.clipboard.writeText("http://localhost:3000/fillSurvey/" + type + '/' + id)}}
+								/>
+								</Box>
+							</Grid>
+							{type === 'Distributed' &&
+								<Grid item xs={12} sm={12} md={12}>
+									<Box sx={{mb: '5px'}}>
+									<LongMenu
+										tokens={tokens !== undefined ? tokens : []}
+									/>
+									</Box>
+								</Grid>
+							}
 						</Grid>
-					</Link>
-					<Grid item xs={12} sm={12} md={12}>
-						<Box sx={{mb: '5px'}}>
-						<Button
-							variant="contained"
-							fullWidth
-							style={{backgroundColor:'#D8BFD8'}}
-							startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
-							onClick={this.handleSurveyDelete}
-						/>
-						</Box>
-					</Grid>
-					<Grid item xs={12} sm={12} md={12}>
-						<Box sx={{mb: '5px'}}>
-						<Button 
-							variant="contained"
-							fullWidth
-							style={{backgroundColor:'#D8BFD8'}}
-							startIcon={<ContentCopyRoundedIcon sx={{mr: '-8px'}}/>}
-							onClick={() => {navigator.clipboard.writeText("http://localhost:3000/fillSurvey/" + type + '/' + id)}}
-						/>
-						</Box>
-					</Grid>
-					{type === 'Distributed' &&
-						<Grid item xs={12} sm={12} md={12}>
-							<Box sx={{mb: '5px'}}>
-							<LongMenu
-								tokens={tokens !== undefined ? tokens : []}
-							/>
-							</Box>
-						</Grid>
-					}
-				</Grid>
+					</CardContent>
+				</Card>
 				{ColoredLine('#d0b3ff')}
 			</Box>
 		);

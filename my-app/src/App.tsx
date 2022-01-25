@@ -17,6 +17,7 @@ import { FillPrivateSurvey } from './pages/surveys/FillPrivateSurvey';
 import { FinalPage } from './pages/FinalPage';
 import { FillDistributedSurvey } from './pages/surveys/FillDistributedSurvey';
 import { DistributedTokenPage } from './pages/surveys/DistributedTokenPage';
+import { SurveyDeletePage } from './pages/surveys/SurveyDeletePage';
 
 class App extends React.Component {
 	public render () {
@@ -122,6 +123,13 @@ class App extends React.Component {
 					<Route exact path={'/finalPage/:status'} render={(props) => (
     					<FinalPage
 							status={props.match.params.status}
+						/>
+						)}
+					/>
+					<Route exact path={'/deleteSurvey/:status/:token'} render={(props) => (
+    					<SurveyDeletePage
+							status={props.match.params.status}
+							token={props.match.params.token}
 						/>
 						)}
 					/>

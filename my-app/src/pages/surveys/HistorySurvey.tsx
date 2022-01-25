@@ -19,6 +19,7 @@ interface HistorySurveyProps {
 interface HistorySurveyState {
 	surveys: SurveyData[];
 	redirectOnDelete: boolean;
+	deleteStatus: string;
 }
 export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySurveyState> {
 	public constructor(props: HistorySurveyProps) {
@@ -27,6 +28,7 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 		this.state = {
 			surveys: [],
 			redirectOnDelete: false,
+			deleteStatus: '',
 		}
 	}
 
@@ -92,12 +94,7 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 						{'Error occurred while creating survey :('}
 					</Typography>
 				}
-				{status === 'deleted' &&
-					<Typography color={'#47d147'} align='center' sx={{mb:'40px'}}>
-						{'Survey deleted successfully!'}
-					</Typography>
-				}
-				{this.state.redirectOnDelete ? (<Redirect push to={'/history/' + this.props.token + '/deleted'} />) : null}
+				{this.state.redirectOnDelete ? (<Redirect push to={'/deleteSurvey/' + this.state.deleteStatus + '/' + this.props.token} />) : null}
 				{renderSurvey}
             </React.Fragment>
 		);
@@ -107,7 +104,9 @@ export class HistorySurvey extends React.Component<HistorySurveyProps, HistorySu
 		return SurveyDataProvider.deleteSurvey(surveyId, token)
 		.then(status => {
 			if (status === 200) {
-				this.setState({redirectOnDelete: true});
+				this.setState({redirectOnDelete: true, deleteStatus: 'deleted'});
+			} else {
+				this.setState({redirectOnDelete: true, deleteStatus: 'error'});
 			}
 		});
 	}
