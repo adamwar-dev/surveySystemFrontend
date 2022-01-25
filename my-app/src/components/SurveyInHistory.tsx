@@ -5,6 +5,7 @@ import { Box, Button, Grid, Menu, MenuItem } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 import VpnKeyRoundedIcon from '@mui/icons-material/VpnKeyRounded';
+import {ColoredLine} from "./Utils";
 
 interface SurveyInHistoryProps {
 	token: string;
@@ -60,15 +61,18 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps, Surve
 						</Grid>
 					</Link>
 					<Grid item xs={12} sm={12} md={12}>
-						<Button 
+						<Box sx={{mb: '5px'}}>
+						<Button
 							variant="contained"
 							fullWidth
 							style={{backgroundColor:'#D8BFD8'}}
 							startIcon={<DeleteRoundedIcon sx={{mr: '-8px'}}/>}
 							onClick={this.handleSurveyDelete}
 						/>
+						</Box>
 					</Grid>
 					<Grid item xs={12} sm={12} md={12}>
+						<Box sx={{mb: '5px'}}>
 						<Button 
 							variant="contained"
 							fullWidth
@@ -76,15 +80,19 @@ export class SurveyInHistory extends React.Component<SurveyInHistoryProps, Surve
 							startIcon={<ContentCopyRoundedIcon sx={{mr: '-8px'}}/>}
 							onClick={() => {navigator.clipboard.writeText("http://localhost:3000/fillSurvey/" + type + '/' + id)}}
 						/>
+						</Box>
 					</Grid>
 					{type === 'Distributed' &&
 						<Grid item xs={12} sm={12} md={12}>
+							<Box sx={{mb: '5px'}}>
 							<LongMenu
 								tokens={tokens !== undefined ? tokens : []}
 							/>
+							</Box>
 						</Grid>
 					}
 				</Grid>
+				{ColoredLine('#d0b3ff')}
 			</Box>
 		);
 	}
