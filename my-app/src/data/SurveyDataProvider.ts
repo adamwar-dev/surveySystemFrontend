@@ -3,7 +3,7 @@ import axios from 'axios';
 export class SurveyDataProvider {
 	public static createPublicSurvey(data: any) {
 		let status = 0;
-		return axios.post(`http://localhost:5000/surveys/publicSurvey`, {
+		return axios.post(`http://localhost:5001/surveys/publicSurvey`, {
 				Title: data.title,
 				Questions: data.questions,
 			}, {
@@ -24,7 +24,7 @@ export class SurveyDataProvider {
 
 	public static createPrivateSurvey(data: any) {
 		let status = 0;
-		return axios.post(`http://localhost:5000/surveys/privateSurvey`, {
+		return axios.post(`http://localhost:5001/surveys/privateSurvey`, {
 				Title: data.title,
 				Questions: data.questions,
 			}, {
@@ -45,7 +45,7 @@ export class SurveyDataProvider {
 
 	public static createDistributedSurvey(data: any) {
 		let status = 0;
-		return axios.post(`http://localhost:5000/surveys/distributedSurvey`, {
+		return axios.post(`http://localhost:5001/surveys/distributedSurvey`, {
 				Title: data.title,
 				Questions: data.questions,
 				AmountOfSurveysToDistribute: data.tokens,
@@ -67,7 +67,7 @@ export class SurveyDataProvider {
 
 	public static getAllUserSurveys(token: string) {
 		let data: any = "";
-		return axios.get(`http://localhost:5000/surveys`, {
+		return axios.get(`http://localhost:5001/surveys`, {
 				headers: {
 				'Authorization': 'Bearer ' + token,
 				'Accept' : 'application/json',
@@ -85,7 +85,7 @@ export class SurveyDataProvider {
 
 	public static getSingleSurvey(token: string, surveyId: string) {
 		let data: any = "";
-		return axios.get('http://localhost:5000/surveys/statistics/' + surveyId , {
+		return axios.get('http://localhost:5001/surveys/statistics/' + surveyId , {
 			headers: {
 				'Authorization': 'Bearer ' + token,
 			},
@@ -101,7 +101,7 @@ export class SurveyDataProvider {
 
 	public static getPublicSurvey(surveyId: string) {
 		let data: any = "";
-		return axios.get('http://localhost:5000/surveys/public/' + surveyId)
+		return axios.get('http://localhost:5001/surveys/public/' + surveyId)
 		.then(res => {
 			console.log(res.data);
 			data = res.data;
@@ -114,7 +114,7 @@ export class SurveyDataProvider {
 
 	public static answerPublicSurvey(surveyId: string, answers: QuestionsAnswers[]) {
 		let data: any = "";
-		return axios.post('http://localhost:5000/surveys/answer/publicSurvey', {
+		return axios.post('http://localhost:5001/surveys/answer/publicSurvey', {
 			SurveyId: surveyId,
 			Answers: answers,
 		}).then(res => {
@@ -129,7 +129,7 @@ export class SurveyDataProvider {
 
 	public static getPrivateSurvey(surveyId: string, token: string) {
 		let data: any = "";
-		return axios.get('http://localhost:5000/surveys/private/' + surveyId, {
+		return axios.get('http://localhost:5001/surveys/private/' + surveyId, {
 			headers: {
 				'Authorization': 'Bearer ' + token,
 			},
@@ -145,7 +145,7 @@ export class SurveyDataProvider {
 
 	public static answerPrivateSurvey(surveyId: string, answers: QuestionsAnswers[], token: string) {
 		let data: any = "";
-		return axios.post('http://localhost:5000/surveys/answer/privateSurvey', {
+		return axios.post('http://localhost:5001/surveys/answer/privateSurvey', {
 			SurveyId: surveyId,
 			Answers: answers,
 		}, {
@@ -166,7 +166,7 @@ export class SurveyDataProvider {
 
 	public static getDistributedSurvey( token: string, surveyId: string, surveyToken: string) {
 		let data: any = "";
-		return axios.post('http://localhost:5000/surveys/distributed/' + surveyId, {
+		return axios.post('http://localhost:5001/surveys/distributed/' + surveyId, {
 			token: surveyToken,
 		}, { 
 			headers: {
@@ -186,7 +186,7 @@ export class SurveyDataProvider {
 
 	public static answerDistributedSurvey(surveyId: string, answers: QuestionsAnswers[], token: string, surveyToken: string) {
 		let data: any = "";
-		return axios.post('http://localhost:5000/surveys/answer/distributedSurvey', {
+		return axios.post('http://localhost:5001/surveys/answer/distributedSurvey', {
 			SurveyId: surveyId,
 			Answers: answers,
 			Token: surveyToken,
@@ -208,7 +208,7 @@ export class SurveyDataProvider {
 
 	public static deleteSurvey(surveyId: string, token: string) {
 		let data: any = "";
-		return axios.delete('http://localhost:5000/surveys/' + surveyId, {
+		return axios.delete('http://localhost:5001/surveys/' + surveyId, {
 			headers: {
 				'Authorization': 'Bearer ' + token,
 				'Accept' : 'application/json',
