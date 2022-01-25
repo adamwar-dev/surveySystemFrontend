@@ -3,7 +3,7 @@ export class AuthenticationDataProvider {
 
 	public static createAccount(email: string, password: string) {
 		let data = 0;
-		return axios.post(`http://localhost:5001/authorization/register`, {
+		return axios.post(`http://localhost:5000/authorization/register`, {
 			email: email,
 			password: password,
 		}).then(res => {
@@ -19,7 +19,7 @@ export class AuthenticationDataProvider {
 
 	public static sendConfirmationCode(email: string) {
 		let data = 0;
-		return axios.post(`http://localhost:5001/authorization/sendConfirmationCode`, {
+		return axios.post(`http://localhost:5000/authorization/sendConfirmationCode`, {
 			email: email,
 		}).then(res => {
 			console.log(res);
@@ -34,7 +34,7 @@ export class AuthenticationDataProvider {
 
 	public static verifyAccount(email: string, confirmationCode: string) {
 		let data = 0;
-		return axios.post(`http://localhost:5001/authorization/confirmEmail`, {
+		return axios.post(`http://localhost:5000/authorization/confirmEmail`, {
 			email: email,
 			confirmationCode: confirmationCode,
 		}).then(res => {
@@ -50,7 +50,7 @@ export class AuthenticationDataProvider {
 
 	public static singIn(email: string, password: string) {
 		let data = '';
-		return axios.post(`http://localhost:5001/authorization/login`, {
+		return axios.post(`http://localhost:5000/authorization/login`, {
 			email: email,
 			password: password,
 		}).then(res => {
@@ -66,7 +66,7 @@ export class AuthenticationDataProvider {
 
 	public static resetPassword(email: string) {
 		let data = 0;
-		return axios.post(`http://localhost:5001/authorization/resetPassword`, {
+		return axios.post(`http://localhost:5000/authorization/resetPassword`, {
 			email: email,
 		}).then(res => {
 			console.log(res);
@@ -81,7 +81,7 @@ export class AuthenticationDataProvider {
 
 	public static getUserData(userToken: string) {
 		let data = '';
-		return axios.get(`http://localhost:5001/authorization/profile`, {
+		return axios.get(`http://localhost:5000/authorization/profile`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 			}

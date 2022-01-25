@@ -1,4 +1,4 @@
-import {Box, Card, CardContent, Typography } from '@mui/material';
+import {Box, Card, CardContent, TextField, Typography } from '@mui/material';
 import * as React from 'react';
 import { NavBar } from '../../components/NavBar';
 import { SurveyDataProvider } from '../../data/SurveyDataProvider';
@@ -51,25 +51,26 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 
 	public render () {
 		const renderQuestions = this.state.questions.map((question, index) => {
-			const questionAnswers = question.RespondentsAnswers.map((answer, index) => {
-				return(
-				<Typography
-					color="text.primary"
-					align='center'
-					paragraph
-					variant='h5'
-					component='div'
-					sx={{ flexGrow: 1 }}
-					>
-					{index + 1 + '. ' + answer}
-				</Typography>
-				)
-			});
-			return (
-				<Box mt={5}>
-				<Card sx={{ml: '30px', mr: '30px'}}>
-					<CardContent>
-						<Box  sx={{ borderRadius: 2 }}>
+			if(question.Type !== 'Open') {
+				const questionAnswers = question.QuestionAnswers.map((questionAnswer, index) => {
+					let singleOrMultiNumber = 0;
+					question.RespondentsAnswers.forEach((respondentAnswer) => {
+						if (respondentAnswer === questionAnswer) {
+							singleOrMultiNumber++;
+						} 
+					});
+					const singleOrMultiPrecent = singleOrMultiNumber/question.RespondentsAnswers.length * 100 + '%';
+					return(
+					<React.Fragment>
+						<TextField
+							disabled
+							multiline
+							fullWidth
+							value={index + 1 + '. ' + questionAnswer}
+							sx = {{color: '#D8BFD8', ".MuiInputBase-input.Mui-disabled": {
+								WebkitTextFillColor: "black",
+							}}}
+						/>
 						<Typography
 							color="text.primary"
 							align='center'
@@ -78,15 +79,81 @@ export class PreviewSurvey extends React.Component<PreviewSurveyProps, PreviewSu
 							component='div'
 							sx={{ flexGrow: 1 }}
 						>
-							{index + 1 + '. ' + question.Content}
+							{'Total answers: ' + singleOrMultiNumber}
 						</Typography>
-						</Box>
-						{ColoredLine('#d0b3ff')}
-						{questionAnswers}
-					</CardContent>
-				</Card>
-				</Box>
-			)
+						<Typography
+							color="text.primary"
+							align='center'
+							paragraph
+							variant='h5'
+							component='div'
+							sx={{ flexGrow: 1 }}
+						>
+							{'Percent: ' + singleOrMultiPrecent}
+						</Typography>
+					</React.Fragment>
+					)
+				});
+				return (
+					<Box mt={5}>
+					<Card sx={{ml: '30px', mr: '30px'}}>
+						<CardContent>
+							<Box  sx={{ borderRadius: 2 }}>
+							<Typography
+								color="text.primary"
+								align='center'
+								paragraph
+								variant='h5'
+								component='div'
+								sx={{ flexGrow: 1 }}
+							>
+								{index + 1 + '. ' + question.Content}
+							</Typography>
+							</Box>
+							{ColoredLine('#d0b3ff')}
+							{questionAnswers}
+						</CardContent>
+					</Card>
+					</Box>
+				)
+			} else {
+				const questionAnswers = question.RespondentsAnswers.map((answer, index) => {
+					return(
+						<TextField
+							disabled
+							multiline
+							fullWidth
+							value={index + 1 + '. ' + answer}
+							sx = {{color: '#D8BFD8', ".MuiInputBase-input.Mui-disabled": {
+								WebkitTextFillColor: "black",
+							}}}
+						/>
+					)
+				});
+				return (
+					<Box mt={5}>
+					<Card sx={{ml: '30px', mr: '30px'}}>
+						<CardContent>
+							<Box  sx={{ borderRadius: 2 }}>
+							<Typography
+								color="text.primary"
+								align='center'
+								paragraph
+								variant='h5'
+								component='div'
+								sx={{ flexGrow: 1 }}
+							>
+								{index + 1 + '. ' + question.Content}
+							</Typography>
+							</Box>
+							{ColoredLine('#d0b3ff')}
+							{questionAnswers}
+						</CardContent>
+					</Card>
+					</Box>
+				)
+			}
+			
 		});
 
 		return (
