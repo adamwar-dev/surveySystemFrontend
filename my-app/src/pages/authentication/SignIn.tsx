@@ -143,7 +143,7 @@ export class SignIn extends React.Component<SingInProps, SignInState> {
 							</Grid>
 							<Grid item>
 								<Link href='/resetPassword' variant='body2' sx={{ color: palettePro.link.linkPrimary}}>
-									{'Do you forgot password? Reset Here'}
+									{'Did you forget password? Reset Here'}
 								</Link>
 							</Grid>
 						</Grid>

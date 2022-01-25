@@ -79,7 +79,7 @@ export class Survey extends React.Component<SurveyProps, SurveyState> {
 						<TextField
 							id='title'
 							label='Title'
-							placeholder='Number of Respondents'
+							placeholder='Brief title of the survey'
 							multiline
 							fullWidth
 							value={title}
